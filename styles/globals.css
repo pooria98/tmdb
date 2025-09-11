@@ -1,0 +1,5 @@
+@import "tailwind-preset-mantine";
+
+.link {
+  text-decoration: none;
+}
