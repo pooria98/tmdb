@@ -1,4 +1,5 @@
 @import "tailwind-preset-mantine";
+@import "@mantine/carousel/styles.css";
 
 .link {
   text-decoration: none;

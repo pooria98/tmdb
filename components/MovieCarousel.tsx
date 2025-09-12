@@ -1,3 +1,4 @@
+import { TMDB_IMG_URL } from "@/lib/constants";
 import { Movies } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import { Badge, Flex, Text } from "@mantine/core";
@@ -21,12 +22,12 @@ const MovieCarousel = async ({ data }: { data: Movies }) => {
         <CarouselSlide key={item.id} p="0.25rem" w="100%" h="100%">
           <Link
             href={item.title ? `/movies/${item.id}` : `/series/${item.id}`}
-            className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t from-white to-[seagreen]"
+            className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t to-[seagreen] to-70%"
           >
             <Image
-              width={500}
-              height={750}
-              src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`}
+              width={342}
+              height={513}
+              src={`${TMDB_IMG_URL}/w342/${item.poster_path}`}
               alt={item.title || item.name}
               className="w-full h-auto block"
             />
@@ -51,7 +52,11 @@ const MovieCarousel = async ({ data }: { data: Movies }) => {
             <Text px="0.5rem" pt="0.5rem" lineClamp={2}>
               {item.title || item.name}
             </Text>
-            <Text px="0.5rem" c="seagreen" fw={700}>
+            <Text
+              px="0.5rem"
+              className="text-[seagreen] dark:text-teal-600"
+              fw={700}
+            >
               {dayjs(item.release_date).format("YYYY") || ""}
             </Text>
           </Link>

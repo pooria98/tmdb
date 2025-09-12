@@ -14,7 +14,10 @@ const ViewMoreButton = ({
   if (small) {
     return (
       <Text fw="bold" hiddenFrom="xs">
-        <Link href={href} className="flex items-center gap-1 text-[seagreen]">
+        <Link
+          href={href}
+          className="flex items-center gap-1 text-[seagreen] dark:text-teal-600"
+        >
           {children} <IconChevronRight size="1rem" />
         </Link>
       </Text>
@@ -22,7 +25,10 @@ const ViewMoreButton = ({
   } else {
     return (
       <Text fw="bold" visibleFrom="xs">
-        <Link href={href} className="flex items-center gap-1 text-[seagreen]">
+        <Link
+          href={href}
+          className="flex items-center gap-1 text-[seagreen] dark:text-teal-600"
+        >
           {children} <IconChevronRight size="1rem" />
         </Link>
       </Text>

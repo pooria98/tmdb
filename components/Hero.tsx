@@ -2,6 +2,7 @@ import { Title, Text, Overlay } from "@mantine/core";
 import Marquee from "react-fast-marquee";
 import Image from "next/image";
 import { Movies } from "@/types/types";
+import { TMDB_IMG_URL } from "@/lib/constants";
 
 interface Props {
   data1: Movies;
@@ -35,7 +36,7 @@ const Hero = ({ data1, data2 }: Props) => {
             key={movie.id}
             width={120}
             height={180}
-            src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+            src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
             alt={movie.title || movie.name}
             className="block"
           />
@@ -47,7 +48,7 @@ const Hero = ({ data1, data2 }: Props) => {
             key={movie.id}
             width={120}
             height={180}
-            src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+            src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
             alt={movie.title || movie.name}
             className="block"
           />

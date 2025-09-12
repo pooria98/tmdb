@@ -1,3 +1,4 @@
+import { TMDB_IMG_URL } from "@/lib/constants";
 import { Persons } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import { Badge, Flex, Text } from "@mantine/core";
@@ -20,12 +21,12 @@ const PersonCarousel = async ({ data }: { data: Persons }) => {
         <CarouselSlide key={item.id} p="0.25rem" w="100%" h="100%">
           <Link
             href={`/movies/${item.id}`}
-            className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t from-white to-[seagreen]"
+            className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t to-[seagreen] to-70%"
           >
             <Image
-              width={500}
-              height={750}
-              src={`https://image.tmdb.org/t/p/w342/${item.profile_path}`}
+              width={342}
+              height={513}
+              src={`${TMDB_IMG_URL}/w342/${item.profile_path}`}
               alt={item.name}
               className="w-full h-auto block"
             />
