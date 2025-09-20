@@ -63,7 +63,7 @@ const HomePage = async () => {
             <ViewMoreButton href="/people">view all celebrities</ViewMoreButton>
           </Group>
           <PersonCarousel data={trendingPeople} />
-          <ViewMoreButton href="/people" small>
+          <ViewMoreButton href="/celebrities" small>
             view all celebrities
           </ViewMoreButton>
         </Stack>
@@ -72,10 +72,15 @@ const HomePage = async () => {
         <Stack gap={0} mb="xl">
           <Group mb="xs" justify="space-between" align="end">
             <Title order={2}>Top Rated Movies</Title>
-            <ViewMoreButton href="/movies">view more</ViewMoreButton>
+            <ViewMoreButton href="/movies?sort_by=vote_average.desc&min_votes=1500">
+              view more
+            </ViewMoreButton>
           </Group>
           <MovieCarousel data={topRatedMovies} />
-          <ViewMoreButton href="/movies" small>
+          <ViewMoreButton
+            href="/movies?sort_by=vote_average.desc&min_votes=1500"
+            small
+          >
             view more
           </ViewMoreButton>
         </Stack>
@@ -84,10 +89,15 @@ const HomePage = async () => {
         <Stack gap={0} mb="xl">
           <Group mb="xs" justify="space-between" align="end">
             <Title order={2}>Top Rated Series</Title>
-            <ViewMoreButton href="/series">view more</ViewMoreButton>
+            <ViewMoreButton href="/series?sort_by=vote_average.desc&min_votes=1500">
+              view more
+            </ViewMoreButton>
           </Group>
           <MovieCarousel data={TopRatedSeries} />
-          <ViewMoreButton href="/series" small>
+          <ViewMoreButton
+            href="/series?sort_by=vote_average.desc&min_votes=1500"
+            small
+          >
             view more
           </ViewMoreButton>
         </Stack>
