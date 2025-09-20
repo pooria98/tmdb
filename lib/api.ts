@@ -10,6 +10,18 @@ async function fetchFromTMDB(endpoint: string) {
   return res.json();
 }
 
+// CONFIG
+
+export async function getLanguages() {
+  return fetchFromTMDB("/configuration/languages");
+}
+
+// SEARCH
+
+export async function searchMovies(query: string) {
+  return fetchFromTMDB(`/search/movie?query=${query}`);
+}
+
 // MOVIES
 
 export async function getTrendingMovies() {
@@ -24,8 +36,22 @@ export async function getTopRatedMovies() {
   return fetchFromTMDB("/movie/top_rated");
 }
 
-export async function getMovies() {
-  return fetchFromTMDB("/discover/movie");
+export async function getMovies(
+  sort_by: string,
+  include_adult: boolean = false,
+  include_video: boolean = false,
+  primary_release_year?: string,
+  with_original_language?: string,
+  with_genres?: string,
+  min_rating?: number,
+  min_votes?: number,
+  page?: number
+) {
+  return fetchFromTMDB(
+    `/discover/movie?sort_by=${sort_by}&include_adult=${include_adult}&include_video=${include_video}&primary_release_year=${primary_release_year}&with_original_language=${with_original_language}&vote_average.gte=${min_rating}&vote_count.gte=${min_votes}&with_genres=${with_genres}&page=${
+      page || 1
+    }`
+  );
 }
 
 // SERIES
@@ -50,4 +76,10 @@ export async function getTrendingPeople() {
 
 export async function getPopularPeople() {
   return fetchFromTMDB("/person/popular");
+}
+
+// GENRES
+
+export async function getMovieGenres() {
+  return fetchFromTMDB("/genre/movie/list");
 }

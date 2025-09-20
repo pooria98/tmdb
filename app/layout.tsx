@@ -7,6 +7,7 @@ import {
 } from "@mantine/core";
 import { theme } from "../theme/theme";
 import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme}>
           <Navbar />
+          <Sidebar />
           {children}
         </MantineProvider>
       </body>
