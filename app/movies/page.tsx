@@ -66,7 +66,7 @@ const Page = async ({
           media_type="movies"
         />
       </div>
-      <PaginationControls total={movies.total_pages} />
+      <PaginationControls total={500} />
     </Container>
   );
 };
