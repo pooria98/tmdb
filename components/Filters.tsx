@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { Attributes, useEffect, useState } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +32,11 @@ const options = {
   },
 };
 
-const Filters = () => {
+const Filters = ({
+  filterType,
+}: {
+  filterType: "movies" | "series" | Attributes;
+}) => {
   const [genres, setGenres] = useState([]);
   const [languages, setLanguages] = useState([]);
 
@@ -44,6 +48,7 @@ const Filters = () => {
   const [includeAdult, setIncludeAdult] = useState(false);
   const [includeNonMovies, setIncludeNonMovies] = useState(false);
   const [year, setYear] = useState<string | null>(null);
+  const [year2, setYear2] = useState<string | null>(null);
   const [language, setLanguage] = useState<string | null>(null);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [minRating, setMinRating] = useState<number>(0);
@@ -71,6 +76,7 @@ const Filters = () => {
     setIncludeAdult(searchParams.get("include_adult") === "true");
     setIncludeNonMovies(searchParams.get("include_video") === "true");
     setYear(searchParams.get("primary_release_year") || null);
+    setYear2(searchParams.get("first_air_date_year") || null);
     setLanguage(searchParams.get("with_original_language") || null);
     const genresParam = searchParams.get("with_genres");
     setSelectedGenres(genresParam ? genresParam.split(",") : []);
@@ -128,27 +134,45 @@ const Filters = () => {
           updateParam("include_adult", e.target.checked);
         }}
       />
-      <Checkbox
-        label="Include Non-movies"
-        checked={includeNonMovies}
-        onChange={(e) => {
-          setIncludeNonMovies(e.target.checked);
-          updateParam("include_video", e.target.checked);
-        }}
-      />
-      <Select
-        label="Year"
-        placeholder="Pick value"
-        data={years}
-        searchable
-        autoSelectOnBlur
-        clearable
-        value={year}
-        onChange={(val) => {
-          setYear(val);
-          updateParam("primary_release_year", val);
-        }}
-      />
+      {filterType === "movies" && (
+        <Checkbox
+          label="Include Non-movies"
+          checked={includeNonMovies}
+          onChange={(e) => {
+            setIncludeNonMovies(e.target.checked);
+            updateParam("include_video", e.target.checked);
+          }}
+        />
+      )}
+      {filterType === "movies" ? (
+        <Select
+          label="Year"
+          placeholder="Pick value"
+          data={years}
+          searchable
+          autoSelectOnBlur
+          clearable
+          value={year}
+          onChange={(val) => {
+            setYear(val);
+            updateParam("primary_release_year", val);
+          }}
+        />
+      ) : (
+        <Select
+          label="Year"
+          placeholder="Pick value"
+          data={years}
+          searchable
+          autoSelectOnBlur
+          clearable
+          value={year2}
+          onChange={(val) => {
+            setYear2(val);
+            updateParam("first_air_date_year", val);
+          }}
+        />
+      )}
       <Select
         label="Language"
         placeholder="Pick value"
@@ -171,7 +195,13 @@ const Filters = () => {
       <MultiSelect
         label="Genres"
         placeholder="Pick multiple values"
-        data={genres && genres.map((genre: Genre) => genre.name)}
+        data={
+          genres &&
+          genres.map((genre: Genre) => ({
+            label: genre.name,
+            value: String(genre.id),
+          }))
+        }
         searchable
         clearable
         value={selectedGenres}
@@ -192,6 +222,8 @@ const Filters = () => {
           value={minRating}
           onChange={(val) => {
             setMinRating(val);
+          }}
+          onChangeEnd={(val) => {
             updateParam("min_rating", String(val));
           }}
         />
@@ -207,6 +239,8 @@ const Filters = () => {
           value={minVoteCount}
           onChange={(val) => {
             setMinVoteCount(val);
+          }}
+          onChangeEnd={(val) => {
             updateParam("min_votes", String(val));
           }}
         />

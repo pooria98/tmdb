@@ -84,8 +84,12 @@ const MediaList = ({ items, genres, languages, media_type }: Props) => (
               <div className="flex gap-2 items-center text-sm">
                 <IconCalendarFilled />
                 <p>
-                  {item.release_date
-                    ? dayjs(item.release_date).format("YYYY")
+                  {media_type === "movies"
+                    ? item.release_date
+                      ? dayjs(item.release_date).format("YYYY")
+                      : "N/A"
+                    : item.first_air_date
+                    ? dayjs(item.first_air_date).format("YYYY")
                     : "N/A"}
                 </p>
               </div>

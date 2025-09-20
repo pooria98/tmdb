@@ -8,7 +8,13 @@ import React from "react";
 import Filters from "./Filters";
 import Sort from "./Sort";
 
-const SortAndFiltersSection = () => {
+const SortAndFiltersSection = ({
+  filterType,
+  sortType,
+}: {
+  filterType: "movies" | "series";
+  sortType: "movies" | "series";
+}) => {
   return (
     <div className="w-full md:w-80">
       <Accordion
@@ -22,7 +28,7 @@ const SortAndFiltersSection = () => {
             <p className="font-semibold">Sort</p>
           </AccordionControl>
           <AccordionPanel>
-            <Sort />
+            <Sort sortType={sortType} />
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem value="filters">
@@ -30,7 +36,7 @@ const SortAndFiltersSection = () => {
             <p className="font-semibold">Filters</p>
           </AccordionControl>
           <AccordionPanel>
-            <Filters />
+            <Filters filterType={filterType} />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

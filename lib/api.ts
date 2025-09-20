@@ -54,6 +54,10 @@ export async function getMovies(
   );
 }
 
+export async function getMovieDetails(id: string) {
+  return fetchFromTMDB(`/movie/${id}`);
+}
+
 // SERIES
 
 export async function getTrendingSeries() {
@@ -66,6 +70,27 @@ export async function getPopularSeries() {
 
 export async function getTopRatedSeries() {
   return fetchFromTMDB("/tv/top_rated");
+}
+
+export async function getSeries(
+  sort_by: string,
+  include_adult: boolean = false,
+  first_air_date_year?: string,
+  with_original_language?: string,
+  with_genres?: string,
+  min_rating?: number,
+  min_votes?: number,
+  page?: number
+) {
+  return fetchFromTMDB(
+    `/discover/tv?sort_by=${sort_by}&include_adult=${include_adult}&first_air_date_year=${first_air_date_year}&with_original_language=${with_original_language}&vote_average.gte=${min_rating}&vote_count.gte=${min_votes}&with_genres=${with_genres}&page=${
+      page || 1
+    }`
+  );
+}
+
+export async function getSeriesDetails(id: string) {
+  return fetchFromTMDB(`/tv/${id}`);
 }
 
 // PEOPLE
@@ -82,4 +107,8 @@ export async function getPopularPeople() {
 
 export async function getMovieGenres() {
   return fetchFromTMDB("/genre/movie/list");
+}
+
+export async function getSeriesGenres() {
+  return fetchFromTMDB("/genre/tv/list");
 }

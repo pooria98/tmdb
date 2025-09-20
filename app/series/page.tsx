@@ -1,7 +1,7 @@
 import {
   getLanguages,
-  getMovieGenres,
-  getMovies,
+  getSeries,
+  getSeriesGenres,
   searchMovies,
 } from "@/lib/api";
 import { Genres, Language, Movies } from "@/types/types";
@@ -17,8 +17,7 @@ const Page = async ({
     query?: string;
     sort_by?: string;
     include_adult?: boolean;
-    include_video?: boolean;
-    primary_release_year?: string;
+    first_air_date_year?: string;
     with_original_language?: string;
     with_genres?: string;
     min_rating?: number;
@@ -29,8 +28,7 @@ const Page = async ({
   const query = (await searchParams)?.query || "";
   const sort_by = (await searchParams)?.sort_by || "";
   const include_adult = (await searchParams)?.include_adult || false;
-  const include_video = (await searchParams)?.include_video || false;
-  const primary_release_year = (await searchParams)?.primary_release_year || "";
+  const first_air_date_year = (await searchParams)?.first_air_date_year || "";
   const with_original_language =
     (await searchParams)?.with_original_language || "";
   const with_genres = (await searchParams)?.with_genres || "";
@@ -39,31 +37,30 @@ const Page = async ({
   const page = (await searchParams)?.page || 1;
   const movies: Movies = query
     ? await searchMovies(query)
-    : await getMovies(
+    : await getSeries(
         sort_by,
         include_adult,
-        include_video,
-        primary_release_year,
+        first_air_date_year,
         with_original_language,
         with_genres,
         min_rating,
         min_votes,
         page
       );
-  const genres: Genres = await getMovieGenres();
+  const genres: Genres = await getSeriesGenres();
   const languages: Language[] = await getLanguages();
   return (
     <Container size="xl" p="sm">
       <Title order={1} py="md">
-        Movies
+        Series
       </Title>
       <div className="flex flex-col md:flex-row gap-2">
-        <SortAndFiltersSection filterType="movies" sortType="movies" />
+        <SortAndFiltersSection filterType="series" sortType="series" />
         <MediaList
           items={movies.results}
           genres={genres}
           languages={languages}
-          media_type="movies"
+          media_type="series"
         />
       </div>
       <PaginationControls total={500} />

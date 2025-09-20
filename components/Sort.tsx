@@ -4,9 +4,9 @@ import { Button, ButtonGroup, Stack } from "@mantine/core";
 import { IconSortAscending, IconSortDescending } from "@tabler/icons-react";
 import { useSearchParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Attributes, useEffect, useState } from "react";
 
-const Sort = () => {
+const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -37,7 +37,9 @@ const Sort = () => {
           variant={sort === "title.desc" ? "filled" : "default"}
           fullWidth
           rightSection={<IconSortDescending />}
-          onClick={() => handleSort("title.desc")}
+          onClick={() =>
+            handleSort(sortType === "movies" ? "title.desc" : "name.desc")
+          }
         >
           Title
         </Button>
@@ -47,7 +49,9 @@ const Sort = () => {
           variant={sort === "title.asc" ? "filled" : "default"}
           fullWidth
           rightSection={<IconSortAscending />}
-          onClick={() => handleSort("title.asc")}
+          onClick={() =>
+            handleSort(sortType === "movies" ? "title.asc" : "name.asc")
+          }
         >
           Title
         </Button>
@@ -78,42 +82,12 @@ const Sort = () => {
         <Button
           classNames={{ inner: "flex justify-between" }}
           size="xs"
-          variant={
-            sort === "vote_average.desc&vote_count.gte=1000"
-              ? "filled"
-              : "default"
-          }
-          fullWidth
-          rightSection={<IconSortDescending />}
-          onClick={() => handleSort("vote_average.desc&vote_count.gte=1000")}
-        >
-          Rating
-        </Button>
-        <Button
-          classNames={{ inner: "flex justify-between" }}
-          size="xs"
-          variant={
-            sort === "vote_average.asc&vote_count.gte=1000"
-              ? "filled"
-              : "default"
-          }
-          fullWidth
-          rightSection={<IconSortAscending />}
-          onClick={() => handleSort("vote_average.asc&vote_count.gte=1000")}
-        >
-          Rating
-        </Button>
-      </ButtonGroup>
-      <ButtonGroup>
-        <Button
-          classNames={{ inner: "flex justify-between" }}
-          size="xs"
           variant={sort === "vote_average.desc" ? "filled" : "default"}
           fullWidth
           rightSection={<IconSortDescending />}
           onClick={() => handleSort("vote_average.desc")}
         >
-          Average Votes
+          Rating
         </Button>
         <Button
           classNames={{ inner: "flex justify-between" }}
@@ -123,7 +97,7 @@ const Sort = () => {
           rightSection={<IconSortAscending />}
           onClick={() => handleSort("vote_average.asc")}
         >
-          Average Votes
+          Rating
         </Button>
       </ButtonGroup>
       <ButtonGroup>
@@ -133,7 +107,13 @@ const Sort = () => {
           variant={sort === "primary_release_date.desc" ? "filled" : "default"}
           fullWidth
           rightSection={<IconSortDescending />}
-          onClick={() => handleSort("primary_release_date.desc")}
+          onClick={() =>
+            handleSort(
+              sortType === "movies"
+                ? "primary_release_date.desc"
+                : "first_air_date.desc"
+            )
+          }
         >
           Release Date
         </Button>
@@ -143,7 +123,13 @@ const Sort = () => {
           variant={sort === "primary_release_date.asc" ? "filled" : "default"}
           fullWidth
           rightSection={<IconSortAscending />}
-          onClick={() => handleSort("primary_release_date.asc")}
+          onClick={() =>
+            handleSort(
+              sortType === "movies"
+                ? "primary_release_date.asc"
+                : "first_air_date.asc"
+            )
+          }
         >
           Release Date
         </Button>
