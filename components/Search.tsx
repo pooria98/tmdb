@@ -1,14 +1,9 @@
 "use client";
 
-import { Button, Collapse, Input, Popover, Select } from "@mantine/core";
+import { Button, Input } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import {
-  IconFilter,
-  IconSearch,
-  IconSortDescending,
-  IconX,
-} from "@tabler/icons-react";
+import { IconSearch, IconX } from "@tabler/icons-react";
 import { FormEvent, useEffect, useState } from "react";
 
 const Search = () => {
@@ -17,8 +12,6 @@ const Search = () => {
   const { replace } = useRouter();
 
   const [value, setValue] = useState("");
-  const [sort, setSort] = useState<string | null>("popularity.desc");
-  const [opened, setOpened] = useState(false);
 
   const handleSearch = (event: FormEvent, term: string) => {
     event.preventDefault();
@@ -28,7 +21,6 @@ const Search = () => {
     } else {
       params.delete("query");
     }
-    params.set("sort_by", sort || "");
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -61,63 +53,10 @@ const Search = () => {
           radius="xl"
           className="flex-1"
         />
-
-        <Button
-          variant="outline"
-          radius="xl"
-          leftSection={<IconFilter size={16} />}
-          onClick={() => setOpened((prev) => !prev)}
-        >
-          Filters
-        </Button>
-
-        <Popover width={300} position="bottom" withArrow shadow="md">
-          <Popover.Target>
-            <Button
-              variant="outline"
-              radius="xl"
-              leftSection={<IconSortDescending size={16} />}
-            >
-              Sort
-            </Button>
-          </Popover.Target>
-          <Popover.Dropdown>
-            <Select
-              value={sort}
-              onChange={setSort}
-              placeholder="Sort"
-              data={[
-                { value: "popularity.desc", label: "Popularity (desc)" },
-                { value: "popularity.asc", label: "Popularity (asc)" },
-                { value: "vote_average.desc", label: "Rating (desc)" },
-                { value: "vote_average.asc", label: "Rating (asc)" },
-                {
-                  value: "primary_release_date.desc",
-                  label: "Release Date (desc)",
-                },
-                {
-                  value: "primary_release_date.asc",
-                  label: "Release Date (asc)",
-                },
-              ]}
-              comboboxProps={{ withinPortal: false }}
-            />
-          </Popover.Dropdown>
-        </Popover>
-
         <Button type="submit" radius="xl">
           Search
         </Button>
       </form>
-
-      <Collapse in={opened}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-          exercitationem dignissimos sint ipsa eius blanditiis est totam
-          aspernatur iusto earum, odio temporibus quaerat rem iste omnis aperiam
-          animi illum qui.
-        </p>
-      </Collapse>
     </>
   );
 };

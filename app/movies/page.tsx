@@ -9,6 +9,7 @@ import { Container, Title } from "@mantine/core";
 import PaginationControls from "@/components/PaginationControls";
 import MediaList from "@/components/MediaList";
 import SortAndFiltersSection from "@/components/SortAndFiltersSection";
+import Search from "@/components/Search";
 
 const Page = async ({
   searchParams,
@@ -38,7 +39,7 @@ const Page = async ({
   const min_votes = (await searchParams)?.min_votes || 0;
   const page = (await searchParams)?.page || 1;
   const movies: Movies = query
-    ? await searchMovies(query)
+    ? await searchMovies(query, include_adult, primary_release_year, page)
     : await getMovies(
         sort_by,
         include_adult,
@@ -57,6 +58,7 @@ const Page = async ({
       <Title order={1} py="md">
         Movies
       </Title>
+      <Search />
       <div className="flex flex-col md:flex-row gap-2">
         <SortAndFiltersSection filterType="movies" sortType="movies" />
         <MediaList

@@ -2,13 +2,14 @@ import {
   getLanguages,
   getSeries,
   getSeriesGenres,
-  searchMovies,
+  searchSeries,
 } from "@/lib/api";
 import { Genres, Language, Movies } from "@/types/types";
 import { Container, Title } from "@mantine/core";
 import PaginationControls from "@/components/PaginationControls";
 import MediaList from "@/components/MediaList";
 import SortAndFiltersSection from "@/components/SortAndFiltersSection";
+import Search from "@/components/Search";
 
 const Page = async ({
   searchParams,
@@ -36,7 +37,7 @@ const Page = async ({
   const min_votes = (await searchParams)?.min_votes || 0;
   const page = (await searchParams)?.page || 1;
   const movies: Movies = query
-    ? await searchMovies(query)
+    ? await searchSeries(query, include_adult, first_air_date_year, page)
     : await getSeries(
         sort_by,
         include_adult,
@@ -54,6 +55,7 @@ const Page = async ({
       <Title order={1} py="md">
         Series
       </Title>
+      <Search />
       <div className="flex flex-col md:flex-row gap-2">
         <SortAndFiltersSection filterType="series" sortType="series" />
         <MediaList

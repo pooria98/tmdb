@@ -11,10 +11,17 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const [sort, setSort] = useState<string>("");
+  const [isSearching, setIsSearching] = useState(false);
 
   // Sync sort state with URL param on mount and when searchParams change
   useEffect(() => {
     const param = searchParams.get("sort_by") || "";
+    const query = searchParams.get("query") || "";
+    if (query) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
     setSort(param);
   }, [searchParams]);
 
@@ -32,6 +39,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
     <Stack gap="xs">
       <ButtonGroup>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "title.desc" ? "filled" : "default"}
@@ -44,6 +52,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
           Title
         </Button>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "title.asc" ? "filled" : "default"}
@@ -58,6 +67,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
       </ButtonGroup>
       <ButtonGroup>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "popularity.desc" ? "filled" : "default"}
@@ -68,6 +78,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
           Popularity
         </Button>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "popularity.asc" ? "filled" : "default"}
@@ -80,6 +91,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
       </ButtonGroup>
       <ButtonGroup>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "vote_average.desc" ? "filled" : "default"}
@@ -90,6 +102,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
           Rating
         </Button>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "vote_average.asc" ? "filled" : "default"}
@@ -102,6 +115,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
       </ButtonGroup>
       <ButtonGroup>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "primary_release_date.desc" ? "filled" : "default"}
@@ -118,6 +132,7 @@ const Sort = ({ sortType }: { sortType: "movies" | "series" | Attributes }) => {
           Release Date
         </Button>
         <Button
+          disabled={isSearching}
           classNames={{ inner: "flex justify-between" }}
           size="xs"
           variant={sort === "primary_release_date.asc" ? "filled" : "default"}

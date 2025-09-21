@@ -53,6 +53,7 @@ const Filters = ({
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [minRating, setMinRating] = useState<number>(0);
   const [minVoteCount, setMinVoteCount] = useState<number>(0);
+  const [isSearching, setIsSearching] = useState(false);
 
   const fetchGenres = async () => {
     const res = await fetch(genresUrl, options);
@@ -82,6 +83,12 @@ const Filters = ({
     setSelectedGenres(genresParam ? genresParam.split(",") : []);
     setMinRating(Number(searchParams.get("min_rating")) || 0);
     setMinVoteCount(Number(searchParams.get("min_votes")) || 0);
+    const query = searchParams.get("query") || "";
+    if (query) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
   }, [searchParams]);
 
   // Helper to update query params
@@ -142,6 +149,7 @@ const Filters = ({
             setIncludeNonMovies(e.target.checked);
             updateParam("include_video", e.target.checked);
           }}
+          disabled={isSearching}
         />
       )}
       {filterType === "movies" ? (
@@ -174,6 +182,7 @@ const Filters = ({
         />
       )}
       <Select
+        disabled={isSearching}
         label="Language"
         placeholder="Pick value"
         data={
@@ -193,6 +202,7 @@ const Filters = ({
         }}
       />
       <MultiSelect
+        disabled={isSearching}
         label="Genres"
         placeholder="Pick multiple values"
         data={
@@ -216,6 +226,7 @@ const Filters = ({
           Minimum Rating
         </Text>
         <Slider
+          disabled={isSearching}
           min={0}
           max={10}
           step={0.5}
@@ -233,6 +244,7 @@ const Filters = ({
           Minimum Vote Counts
         </Text>
         <Slider
+          disabled={isSearching}
           min={0}
           max={10000}
           step={100}

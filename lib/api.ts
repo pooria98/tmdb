@@ -18,8 +18,30 @@ export async function getLanguages() {
 
 // SEARCH
 
-export async function searchMovies(query: string) {
-  return fetchFromTMDB(`/search/movie?query=${query}`);
+export async function searchMovies(
+  query: string,
+  include_adult: boolean = false,
+  primary_release_year?: string,
+  page?: number
+) {
+  return fetchFromTMDB(
+    `/search/movie?query=${query}&include_adult=${include_adult}&primary_release_year=${primary_release_year}&page=${
+      page || 1
+    }`
+  );
+}
+
+export async function searchSeries(
+  query: string,
+  include_adult: boolean = false,
+  first_air_date_year?: string,
+  page?: number
+) {
+  return fetchFromTMDB(
+    `/search/tv?query=${query}&include_adult=${include_adult}&first_air_date_year=${first_air_date_year}&page=${
+      page || 1
+    }`
+  );
 }
 
 // MOVIES
