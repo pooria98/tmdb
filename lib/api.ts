@@ -44,6 +44,12 @@ export async function searchSeries(
   );
 }
 
+export async function searchCelebrities(query: string, page?: number) {
+  return fetchFromTMDB(
+    `/search/person?query=${query}&include_adult=true&page=${page || 1}`
+  );
+}
+
 // MOVIES
 
 export async function getTrendingMovies() {
@@ -115,14 +121,14 @@ export async function getSeriesDetails(id: string) {
   return fetchFromTMDB(`/tv/${id}`);
 }
 
-// PEOPLE
+// CELEBRITIES
 
 export async function getTrendingPeople() {
   return fetchFromTMDB("/trending/person/day");
 }
 
-export async function getPopularPeople() {
-  return fetchFromTMDB("/person/popular");
+export async function getPopularPeople(page?: number) {
+  return fetchFromTMDB(`/person/popular?page=${page || 1}`);
 }
 
 // GENRES
