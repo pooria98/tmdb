@@ -64,7 +64,7 @@ const MediaList = ({ items, genres, languages, media_type }: Props) => (
             {/* OTHER INFO */}
             <div className="flex md:flex-col md:items-start md:gap-2 justify-between items-center px-1 md:px-0 text-[var(--mantine-color-dimmed)]">
               <div className="hidden md:flex justify-between items-center gap-2">
-                {item.vote_average && (
+                {item.vote_average > 0 && (
                   <Badge variant="default" size="lg">
                     <Group gap="xs">
                       <IconStarFilled
