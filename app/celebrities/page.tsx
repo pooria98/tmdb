@@ -44,7 +44,11 @@ const page = async ({
           ))}
         </SimpleGrid>
       </div>
-      <PaginationControls total={500} />
+      {celebrities.total_pages > 1 && (
+        <PaginationControls
+          total={celebrities.total_pages <= 500 ? celebrities.total_pages : 500}
+        />
+      )}
     </Container>
   );
 };

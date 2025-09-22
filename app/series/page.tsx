@@ -65,7 +65,11 @@ const Page = async ({
           media_type="series"
         />
       </div>
-      <PaginationControls total={500} />
+      {movies.total_pages > 1 && (
+        <PaginationControls
+          total={movies.total_pages <= 500 ? movies.total_pages : 500}
+        />
+      )}
     </Container>
   );
 };
