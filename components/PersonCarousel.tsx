@@ -1,11 +1,11 @@
 import { TMDB_IMG_URL } from "@/lib/constants";
-import { Person } from "@/types/types";
+import { Credit, Person } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import { Badge, Flex, Text } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 
-const PersonCarousel = async ({ data }: { data: Person[] }) => {
+const PersonCarousel = async ({ data }: { data: Person[] | Credit[] }) => {
   return (
     <Carousel
       controlsOffset="xs"
@@ -20,14 +20,14 @@ const PersonCarousel = async ({ data }: { data: Person[] }) => {
       {data?.map((item) => (
         <CarouselSlide key={item.id} p="0.25rem" w="100%" h="100%">
           <Link
-            href={`/movies/${item.id}`}
+            href={`/celebrities/${item.id}`}
             className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t to-[seagreen] to-70%"
           >
             <Image
               width={342}
               height={513}
               src={`${TMDB_IMG_URL}/w342/${item.profile_path}`}
-              alt={item.name}
+              alt={item.name || "title"}
               className="w-full h-auto block"
             />
             <Flex

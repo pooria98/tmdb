@@ -93,6 +93,18 @@ export async function getMovieDetails(id: string) {
   return fetchFromTMDB(`/movie/${id}`);
 }
 
+export async function getMovieExternalIDs(id: string) {
+  return fetchFromTMDB(`/movie/${id}/external_ids`);
+}
+
+export async function getMovieCredits(id: string) {
+  return fetchFromTMDB(`/movie/${id}/credits`);
+}
+
+export async function getMovieRecommendations(id: string) {
+  return fetchFromTMDB(`/movie/${id}/recommendations`);
+}
+
 // SERIES
 
 export async function getTrendingSeries() {

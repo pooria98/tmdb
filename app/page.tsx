@@ -60,7 +60,9 @@ const HomePage = async () => {
         <Stack gap={0} mb="xl">
           <Group mb="xs" justify="space-between" align="end">
             <Title order={2}>Trending Celebrities</Title>
-            <ViewMoreButton href="/people">view all celebrities</ViewMoreButton>
+            <ViewMoreButton href="/celebrities">
+              view all celebrities
+            </ViewMoreButton>
           </Group>
           <PersonCarousel data={trendingPeople.results} />
           <ViewMoreButton href="/celebrities" small>

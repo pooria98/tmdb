@@ -1,25 +1,31 @@
-import { RingProgress, Text } from "@mantine/core";
+import { RingProgress, Stack, Text } from "@mantine/core";
 
 interface Props {
-  children: React.ReactNode;
   value: number;
+  vote_count: number;
 }
 
-const Rating = ({ children, value }: Props) => {
+const Rating = ({ value, vote_count }: Props) => {
   return (
-    <RingProgress
-      sections={[
-        {
-          value: value,
-          color: value > 70 ? "green" : value > 40 ? "yellow" : "red",
-        },
-      ]}
-      label={
-        <Text fw={700} ta="center" size="xl">
-          {children}
-        </Text>
-      }
-    />
+    <Stack gap={0} w="fit-content">
+      <RingProgress
+        roundCaps
+        sections={[
+          {
+            value: value,
+            color: value > 70 ? "green" : value > 40 ? "yellow" : "red",
+          },
+        ]}
+        label={
+          <Text fw={700} ta="center" size="xl">
+            {value} <span className="text-xs">%</span>
+          </Text>
+        }
+      />
+      <Text fw={700} ta="center" size="sm">
+        ({vote_count} votes)
+      </Text>
+    </Stack>
   );
 };
 

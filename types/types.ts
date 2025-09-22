@@ -12,6 +12,7 @@ export interface Movie {
   original_language: string;
   vote_count: number;
   genre_ids: number[];
+  media_type: "movie" | "tv";
 }
 
 export interface Person {
@@ -239,6 +240,8 @@ export interface Credit {
   release_date?: string; // For movies
   first_air_date?: string; // For TV shows
   job?: string;
+  profile_path?: string;
+  adult: boolean;
 }
 
 export interface CombinedCredits {
