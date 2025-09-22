@@ -1,12 +1,12 @@
 import { Title, Text, Overlay } from "@mantine/core";
 import Marquee from "react-fast-marquee";
 import Image from "next/image";
-import { Movies } from "@/types/types";
+import { Movie } from "@/types/types";
 import { TMDB_IMG_URL } from "@/lib/constants";
 
 interface Props {
-  data1: Movies;
-  data2: Movies;
+  data1: Movie[];
+  data2: Movie[];
 }
 
 const Hero = ({ data1, data2 }: Props) => {
@@ -31,7 +31,7 @@ const Hero = ({ data1, data2 }: Props) => {
       </div>
 
       <Marquee>
-        {data1.results.map((movie) => (
+        {data1.map((movie) => (
           <Image
             key={movie.id}
             width={120}
@@ -43,7 +43,7 @@ const Hero = ({ data1, data2 }: Props) => {
         ))}
       </Marquee>
       <Marquee direction="right">
-        {data2.results.map((movie) => (
+        {data2.map((movie) => (
           <Image
             key={movie.id}
             width={120}

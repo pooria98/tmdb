@@ -202,3 +202,46 @@ export interface TmdbSeries {
   vote_average: number;
   vote_count: number;
 }
+
+export interface TmdbPersonDetails {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string | null; // ISO date string or null
+  deathday: string | null; // ISO date string or null
+  gender: number; // 0 = not specified, 1 = female, 2 = male, 3 = non-binary
+  homepage: string | null;
+  id: number;
+  imdb_id: string | null;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string | null;
+  popularity: number;
+  profile_path: string | null; // relative path from TMDB
+}
+
+export interface ExternalIds {
+  imdb_id?: string;
+  facebook_id?: string;
+  instagram_id?: string;
+  twitter_id?: string;
+  wikidata_id?: string;
+}
+
+export interface Credit {
+  id: number;
+  media_type: "movie" | "tv";
+  popularity: number;
+  poster_path: string | null;
+  title?: string; // For movies
+  name?: string; // For TV shows
+  character: string;
+  release_date?: string; // For movies
+  first_air_date?: string; // For TV shows
+  job?: string;
+}
+
+export interface CombinedCredits {
+  cast: Credit[];
+  crew: Credit[];
+}

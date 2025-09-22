@@ -4,10 +4,17 @@ async function fetchFromTMDB(endpoint: string) {
   const res = await fetch(`${TMDB_BASE_URL}${endpoint}`, TMDB_OPTIONS);
 
   if (!res.ok) {
+    // A more specific error message can be helpful for debugging.
+    const errorBody = await res.text();
+    console.error(
+      `TMDB fetch error: ${res.status} for endpoint: ${endpoint}. Body: ${errorBody}`
+    );
     throw new Error(`TMDB fetch error: ${res.status}`);
   }
 
-  return res.json();
+  // Handle cases where the response might be empty
+  const text = await res.text();
+  return text ? JSON.parse(text) : {};
 }
 
 // CONFIG
@@ -129,6 +136,18 @@ export async function getTrendingPeople() {
 
 export async function getPopularPeople(page?: number) {
   return fetchFromTMDB(`/person/popular?page=${page || 1}`);
+}
+
+export async function getCelebritiesDetails(id: string) {
+  return fetchFromTMDB(`/person/${id}`);
+}
+
+export async function getPersonExternalIds(id: string) {
+  return fetchFromTMDB(`/person/${id}/external_ids`);
+}
+
+export async function getPersonCombinedCredits(id: string) {
+  return fetchFromTMDB(`/person/${id}/combined_credits`);
 }
 
 // GENRES

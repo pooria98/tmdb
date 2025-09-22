@@ -29,7 +29,7 @@ const HomePage = async () => {
   return (
     <>
       {/* HERO */}
-      <Hero data1={topRatedMovies} data2={TopRatedSeries} />
+      <Hero data1={topRatedMovies.results} data2={TopRatedSeries.results} />
 
       <Container size="xl" p="sm">
         {/* TRENDING MOVIES */}
@@ -38,7 +38,7 @@ const HomePage = async () => {
             <Title order={2}>Trending Movies</Title>
             <ViewMoreButton href="/movies">view all movies</ViewMoreButton>
           </Group>
-          <MovieCarousel data={trendingMovies} />
+          <MovieCarousel data={trendingMovies.results} />
           <ViewMoreButton href="/movies" small>
             view all movies
           </ViewMoreButton>
@@ -50,7 +50,7 @@ const HomePage = async () => {
             <Title order={2}>Trending Series</Title>
             <ViewMoreButton href="/series">view all series</ViewMoreButton>
           </Group>
-          <MovieCarousel data={trendingSeries} />
+          <MovieCarousel data={trendingSeries.results} />
           <ViewMoreButton href="/series" small>
             view all series
           </ViewMoreButton>
@@ -62,7 +62,7 @@ const HomePage = async () => {
             <Title order={2}>Trending Celebrities</Title>
             <ViewMoreButton href="/people">view all celebrities</ViewMoreButton>
           </Group>
-          <PersonCarousel data={trendingPeople} />
+          <PersonCarousel data={trendingPeople.results} />
           <ViewMoreButton href="/celebrities" small>
             view all celebrities
           </ViewMoreButton>
@@ -76,7 +76,7 @@ const HomePage = async () => {
               view more
             </ViewMoreButton>
           </Group>
-          <MovieCarousel data={topRatedMovies} />
+          <MovieCarousel data={topRatedMovies.results} />
           <ViewMoreButton
             href="/movies?sort_by=vote_average.desc&min_votes=1500"
             small
@@ -93,7 +93,7 @@ const HomePage = async () => {
               view more
             </ViewMoreButton>
           </Group>
-          <MovieCarousel data={TopRatedSeries} />
+          <MovieCarousel data={TopRatedSeries.results} />
           <ViewMoreButton
             href="/series?sort_by=vote_average.desc&min_votes=1500"
             small

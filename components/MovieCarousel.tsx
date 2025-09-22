@@ -1,12 +1,16 @@
 import { TMDB_IMG_URL } from "@/lib/constants";
-import { Movies } from "@/types/types";
+import { Movie, Credit } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import { Badge, Flex, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 
-const MovieCarousel = async ({ data }: { data: Movies }) => {
+interface Props {
+  data: Movie[] | Credit[];
+}
+
+const MovieCarousel = async ({ data }: Props) => {
   return (
     <Carousel
       controlsOffset="xs"
@@ -18,7 +22,7 @@ const MovieCarousel = async ({ data }: { data: Movies }) => {
       slideSize="180px"
       emblaOptions={{ align: "start", dragFree: true }}
     >
-      {data?.results.map((item) => (
+      {data?.map((item) => (
         <CarouselSlide key={item.id} p="0.25rem" w="100%" h="100%">
           <Link
             href={item.title ? `/movies/${item.id}` : `/series/${item.id}`}
@@ -28,7 +32,7 @@ const MovieCarousel = async ({ data }: { data: Movies }) => {
               width={342}
               height={513}
               src={`${TMDB_IMG_URL}/w342/${item.poster_path}`}
-              alt={item.title || item.name}
+              alt={item.title || item.name || "title"}
               className="w-full h-auto block"
             />
             <Flex
@@ -38,12 +42,12 @@ const MovieCarousel = async ({ data }: { data: Movies }) => {
               w="calc(100% - 1rem)"
               justify="space-between"
             >
-              {item.vote_average && (
+              {"vote_average" in item && item.vote_average && (
                 <Badge color="var(--mantine-color-yellow-4)" c="black">
                   {item.vote_average.toFixed(1)}
                 </Badge>
               )}
-              {item.adult && (
+              {"adult" in item && item.adult && (
                 <Badge fs={"0.25rem"} color="var(--mantine-color-red-9)">
                   18+
                 </Badge>
