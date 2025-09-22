@@ -55,9 +55,7 @@ const Page = async ({
   const languages: Language[] = await getLanguages();
   return (
     <Container size="xl" p="sm">
-      <Title order={1} py="md">
-        Movies
-      </Title>
+      <Title order={1}>Movies</Title>
       <Search />
       <div className="flex flex-col md:flex-row gap-2">
         <SortAndFiltersSection filterType="movies" sortType="movies" />

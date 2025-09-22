@@ -20,9 +20,7 @@ const page = async ({
 
   return (
     <Container size="xl" p="sm">
-      <Title order={1} py="md">
-        Celebrities
-      </Title>
+      <Title order={1}>Celebrities</Title>
       <Search />
       <div>
         <SimpleGrid cols={{ base: 2, xs: 3, sm: 4, md: 5 }}>
