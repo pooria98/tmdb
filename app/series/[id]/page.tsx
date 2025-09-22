@@ -74,6 +74,7 @@ export default async function TvShowPage({
                 </Text>
               </Group>
               <Group gap="xs" className="flex-wrap">
+                {series.adult && <Badge color="red">+18</Badge>}
                 {series.genres.map((g) => (
                   <Badge key={g.id} variant="default">
                     {g.name}

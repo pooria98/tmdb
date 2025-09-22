@@ -70,6 +70,7 @@ export default async function MoviePage({
                 <Text>{new Date(movie.release_date).getFullYear()}</Text>
               </Group>
               <Group gap="xs" className="flex-wrap">
+                {movie.adult && <Badge color="red">+18</Badge>}
                 {movie.genres.map((g) => (
                   <Badge key={g.id} variant="default">
                     {g.name}
