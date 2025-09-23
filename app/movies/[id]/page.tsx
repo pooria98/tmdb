@@ -32,7 +32,7 @@ import PersonCarousel from "@/components/PersonCarousel";
 import ViewMoreButton from "@/components/ViewMoreButton";
 import MovieCarousel from "@/components/MovieCarousel";
 
-export default async function MoviePage({
+export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
