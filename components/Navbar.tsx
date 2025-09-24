@@ -1,11 +1,19 @@
 "use client";
 
-import { Button, Container, Flex, Group, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Container,
+  Flex,
+  Group,
+  Title,
+} from "@mantine/core";
 import ThemeSwitch from "./ThemeSwitch";
 import Link from "next/link";
 import BurgerButton from "./BurgerButton";
 import navlinks from "@/lib/navlinks";
 import { usePathname } from "next/navigation";
+import { IconSearch } from "@tabler/icons-react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -43,6 +51,17 @@ const Navbar = () => {
               Login
             </Button>
             <ThemeSwitch />
+            <Link href="/search" className="rounded-full">
+              <ActionIcon
+                radius="xl"
+                variant="outline"
+                color="white"
+                size="lg"
+                aria-label="search"
+              >
+                <IconSearch stroke={1.5} />
+              </ActionIcon>
+            </Link>
           </Group>
           {/* LOGIN / PROFILE / NOTIFICATIONS / THEME SWITCH */}
         </Flex>

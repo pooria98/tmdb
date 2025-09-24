@@ -250,3 +250,32 @@ export interface CombinedCredits {
   cast: Credit[];
   crew: Credit[];
 }
+
+export interface TmdbAllSearchResponse {
+  page: number;
+  results: TmdbSearchResult[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface TmdbSearchResult {
+  adult: boolean;
+  backdrop_path: string | null;
+  id: number;
+  title?: string; // movies
+  name?: string; // tv shows / people
+  original_language: string;
+  original_title?: string; // movies
+  original_name?: string; // tv shows
+  overview: string;
+  poster_path: string | null;
+  profile_path: string | null;
+  media_type: string; // "movie" | "tv" | "person"
+  genre_ids: number[];
+  popularity: number;
+  release_date?: string; // movies
+  first_air_date?: string; // tv shows
+  video?: boolean;
+  vote_average: number;
+  vote_count: number;
+}
