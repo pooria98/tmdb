@@ -31,6 +31,7 @@ import SocialIcon from "@/components/SocialIcon";
 import PersonCarousel from "@/components/PersonCarousel";
 import ViewMoreButton from "@/components/ViewMoreButton";
 import MovieCarousel from "@/components/MovieCarousel";
+import CompaniesCard from "@/components/CompaniesCard";
 
 export default async function Page({
   params,
@@ -239,22 +240,7 @@ export default async function Page({
                 </Title>
                 <Flex gap="lg" wrap="wrap">
                   {movie.production_companies.map((c) => (
-                    <Group
-                      key={c.id}
-                      gap="sm"
-                      className="rounded-full shadow-sm text-black bg-white dark:bg-gray-300 border border-gray-300 py-2 px-8"
-                    >
-                      {c.logo_path && (
-                        <Image
-                          src={`${TMDB_IMG_URL}/w200${c.logo_path}`}
-                          alt={c.name}
-                          width={200}
-                          height={200}
-                          className="object-contain h-8 w-fit"
-                        />
-                      )}
-                      <Text>{c.name}</Text>
-                    </Group>
+                    <CompaniesCard key={c.id} company={c} />
                   ))}
                 </Flex>
               </section>
