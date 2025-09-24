@@ -1,3 +1,4 @@
+import noPreview from "@/public/no-preview.png";
 import { TMDB_IMG_URL } from "@/lib/constants";
 import { Credit, Person } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
@@ -23,13 +24,23 @@ const PersonCarousel = async ({ data }: { data: Person[] | Credit[] }) => {
             href={`/celebrities/${item.id}`}
             className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t to-[seagreen] to-70%"
           >
-            <Image
-              width={342}
-              height={513}
-              src={`${TMDB_IMG_URL}/w342/${item.profile_path}`}
-              alt={item.name || "title"}
-              className="w-full h-auto block"
-            />
+            {item.profile_path ? (
+              <Image
+                width={342}
+                height={513}
+                src={`${TMDB_IMG_URL}/w342/${item.profile_path}`}
+                alt={item.name || "title"}
+                className="w-full h-auto block"
+              />
+            ) : (
+              <Image
+                width={342}
+                height={513}
+                src={noPreview}
+                alt={item.name || "title"}
+                className="w-full h-auto block"
+              />
+            )}
             <Flex
               pos="absolute"
               top="0.5rem"

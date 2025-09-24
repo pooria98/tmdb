@@ -1,3 +1,4 @@
+import noPreview from "@/public/no-preview.png";
 import PaginationControls from "@/components/PaginationControls";
 import Search from "@/components/Search";
 import { getPopularPeople, searchCelebrities } from "@/lib/api";
@@ -28,13 +29,23 @@ const page = async ({
             <Link href={`/celebrities/${celeb.id}`} key={celeb.id}>
               <Card shadow="sm" padding="sm" radius="md" withBorder>
                 <CardSection mb="sm">
-                  <Image
-                    src={`${TMDB_IMG_URL}/w500/${celeb.profile_path}`}
-                    width={384}
-                    height={576}
-                    alt={celeb.name}
-                    className="block w-full h-auto"
-                  />
+                  {celeb.profile_path ? (
+                    <Image
+                      src={`${TMDB_IMG_URL}/w500/${celeb.profile_path}`}
+                      width={384}
+                      height={576}
+                      alt={celeb.name}
+                      className="block w-full h-auto"
+                    />
+                  ) : (
+                    <Image
+                      src={noPreview}
+                      width={384}
+                      height={576}
+                      alt={celeb.name}
+                      className="block w-full h-auto"
+                    />
+                  )}
                 </CardSection>
                 <p>{celeb.name}</p>
               </Card>

@@ -1,3 +1,4 @@
+import noPreview from "@/public/no-preview.png";
 import { TMDB_IMG_URL } from "@/lib/constants";
 import { Movie, Credit } from "@/types/types";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
@@ -28,13 +29,23 @@ const MovieCarousel = async ({ data }: Props) => {
             href={item.title ? `/movies/${item.id}` : `/series/${item.id}`}
             className="block w-full h-auto rounded-[0.5rem] overflow-hidden bg-gradient-to-t to-[seagreen] to-70%"
           >
-            <Image
-              width={342}
-              height={513}
-              src={`${TMDB_IMG_URL}/w342/${item.poster_path}`}
-              alt={item.title || item.name || "title"}
-              className="w-full h-auto block"
-            />
+            {item.poster_path ? (
+              <Image
+                width={342}
+                height={513}
+                src={`${TMDB_IMG_URL}/w342/${item.poster_path}`}
+                alt={item.title || item.name || "title"}
+                className="w-full h-auto block"
+              />
+            ) : (
+              <Image
+                width={342}
+                height={513}
+                src={noPreview}
+                alt={item.title || item.name || "title"}
+                className="w-full h-auto block"
+              />
+            )}
             <Flex
               pos="absolute"
               top="0.5rem"

@@ -140,6 +140,18 @@ export async function getSeriesDetails(id: string) {
   return fetchFromTMDB(`/tv/${id}`);
 }
 
+export async function getSeriesExternalIDs(id: string) {
+  return fetchFromTMDB(`/tv/${id}/external_ids`);
+}
+
+export async function getSeriesCredits(id: string) {
+  return fetchFromTMDB(`/tv/${id}/credits`);
+}
+
+export async function getSeriesRecommendations(id: string) {
+  return fetchFromTMDB(`/tv/${id}/recommendations`);
+}
+
 // CELEBRITIES
 
 export async function getTrendingPeople() {

@@ -11,7 +11,7 @@ const SocialIcon = ({
   id,
 }: {
   platform: "imdb" | "facebook" | "instagram" | "twitter" | "website";
-  id: string | undefined;
+  id: string | undefined | null;
 }) => {
   if (!id) return null;
 
@@ -32,7 +32,7 @@ const SocialIcon = ({
     facebook: <IconBrandFacebook size={32} color="#1877F2" />,
     instagram: <IconBrandInstagram size={32} color="#8134AF" />,
     twitter: <IconBrandTwitter size={32} color="#1DA1F2" />,
-    website: <IconWorld size={32} color="blue" />,
+    website: <IconWorld size={32} color="var(--mantine-color-blue-6)" />,
   };
 
   const href = platform === "website" ? id : `${baseUrls[platform]}${id}`;

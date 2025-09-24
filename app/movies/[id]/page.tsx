@@ -50,7 +50,7 @@ export default async function Page({
       <div
         className="relative w-full min-h-[500px] mb-4"
         style={{
-          background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.9)), url(${TMDB_IMG_URL}/w780${movie.backdrop_path})`,
+          background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.9)), url(${TMDB_IMG_URL}/original${movie.backdrop_path})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -61,13 +61,23 @@ export default async function Page({
             <div className="flex gap-8">
               {/* POSTER (left side) */}
               <div className="w-64 hidden md:block">
-                <Image
-                  src={`${TMDB_IMG_URL}/w500${movie.poster_path}`}
-                  alt={movie.title}
-                  width={500}
-                  height={750}
-                  className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
-                />
+                {movie.poster_path ? (
+                  <Image
+                    src={`${TMDB_IMG_URL}/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    width={500}
+                    height={750}
+                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
+                  />
+                ) : (
+                  <Image
+                    src={noPreview}
+                    alt={movie.title}
+                    width={500}
+                    height={750}
+                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
+                  />
+                )}
               </div>
 
               {/* INFO (right side) */}
@@ -88,13 +98,15 @@ export default async function Page({
                     <div className="flex flex-col gap-4 px-2">
                       <Group gap={8}>
                         <IconCalendar />
-                        <Text className="font-bold">
+                        <Text className="font-bold" lh={1}>
                           {new Date(movie.release_date).getFullYear()}
                         </Text>
                       </Group>
                       <Group gap={8}>
                         <IconClock />
-                        <Text className="font-bold">{movie.runtime} min</Text>
+                        <Text className="font-bold" lh={1}>
+                          {movie.runtime} min
+                        </Text>
                       </Group>
                     </div>
                   </div>
@@ -129,6 +141,7 @@ export default async function Page({
               <SocialIcon platform="twitter" id={externalIds.twitter_id} />
               <SocialIcon platform="facebook" id={externalIds.facebook_id} />
               <SocialIcon platform="instagram" id={externalIds.instagram_id} />
+              <SocialIcon platform="website" id={movie.homepage} />
             </Group>
 
             <div className="space-y-4">
@@ -212,7 +225,7 @@ export default async function Page({
                   </ViewMoreButton>
                 </Group>
                 <PersonCarousel data={credits.cast.slice(0, 10)} />
-                <ViewMoreButton href="/celebrities" small>
+                <ViewMoreButton href={`movies/${id}/cast-and-crew`} small>
                   All cast & crew
                 </ViewMoreButton>
               </Stack>
@@ -235,8 +248,8 @@ export default async function Page({
                         <Image
                           src={`${TMDB_IMG_URL}/w200${c.logo_path}`}
                           alt={c.name}
-                          width={40}
-                          height={40}
+                          width={200}
+                          height={200}
                           className="object-contain h-8 w-fit"
                         />
                       )}
@@ -253,15 +266,23 @@ export default async function Page({
                 <Title order={2} className="text-2xl font-bold mb-4">
                   Part of a Collection
                 </Title>
-                <Image
-                  src={`${TMDB_IMG_URL}/w200${
-                    movie.belongs_to_collection.poster_path || noPreview
-                  }`}
-                  alt={movie.belongs_to_collection.name}
-                  width={200}
-                  height={300}
-                  className="rounded-lg shadow-md"
-                />
+                {movie.belongs_to_collection.poster_path ? (
+                  <Image
+                    src={`${TMDB_IMG_URL}/w200${movie.belongs_to_collection.poster_path}`}
+                    alt={movie.belongs_to_collection.name}
+                    width={200}
+                    height={300}
+                    className="rounded-lg shadow-md"
+                  />
+                ) : (
+                  <Image
+                    src={noPreview}
+                    alt={movie.belongs_to_collection.name}
+                    width={200}
+                    height={300}
+                    className="rounded-lg shadow-md"
+                  />
+                )}
               </section>
             )}
 

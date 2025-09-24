@@ -31,28 +31,34 @@ const Hero = ({ data1, data2 }: Props) => {
       </div>
 
       <Marquee>
-        {data1.map((movie) => (
-          <Image
-            key={movie.id}
-            width={120}
-            height={180}
-            src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
-            alt={movie.title || movie.name}
-            className="block"
-          />
-        ))}
+        {data1.map(
+          (movie) =>
+            movie.poster_path && (
+              <Image
+                key={movie.id}
+                width={120}
+                height={180}
+                src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
+                alt={movie.title || movie.name}
+                className="block"
+              />
+            )
+        )}
       </Marquee>
       <Marquee direction="right">
-        {data2.map((movie) => (
-          <Image
-            key={movie.id}
-            width={120}
-            height={180}
-            src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
-            alt={movie.title || movie.name}
-            className="block"
-          />
-        ))}
+        {data2.map(
+          (movie) =>
+            movie.poster_path && (
+              <Image
+                key={movie.id}
+                width={120}
+                height={180}
+                src={`${TMDB_IMG_URL}/w342/${movie.poster_path}`}
+                alt={movie.title || movie.name}
+                className="block"
+              />
+            )
+        )}
       </Marquee>
     </div>
   );
