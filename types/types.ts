@@ -242,6 +242,8 @@ export interface Credit {
   job?: string;
   profile_path?: string;
   adult: boolean;
+  vote_count: number;
+  vote_average: number;
 }
 
 export interface CombinedCredits {

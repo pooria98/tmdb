@@ -177,7 +177,12 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <Title order={2} className="text-2xl font-bold mb-4">
               Known For
             </Title>
-            <MovieCarousel data={credits.cast.slice(0, 10)} />
+            <MovieCarousel
+              data={credits.cast
+                .sort((a, b) => b.vote_average - a.vote_average)
+                .sort((a, b) => b.vote_count - a.vote_count)
+                .slice(0, 10)}
+            />
           </section>
 
           {sortedCastCredits.length > 0 && (
