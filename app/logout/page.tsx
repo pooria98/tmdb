@@ -1,0 +1,25 @@
+"use client";
+
+import { authClient } from "@/lib/auth-client";
+import useLogout from "@/lib/useLogout";
+import { Button } from "@mantine/core";
+import React from "react";
+
+const Page = () => {
+  const session = authClient.useSession();
+  const { handleLogout, loading } = useLogout();
+
+  return (
+    <div className="w-full h-[calc(100vh-70px)] flex justify-center items-center gap-4">
+      <Button
+        color="red"
+        onClick={handleLogout}
+        disabled={!session.data || loading}
+      >
+        {loading ? "Logging out..." : "Logout"}
+      </Button>
+    </div>
+  );
+};
+
+export default Page;

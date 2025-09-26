@@ -5,6 +5,7 @@ import {
   ColorSchemeScript,
   mantineHtmlProps,
 } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { theme } from "../theme/theme";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
@@ -31,6 +32,7 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme}>
+          <Notifications />
           <Navbar />
           <Sidebar />
           {children}
