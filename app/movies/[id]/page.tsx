@@ -221,12 +221,12 @@ export default async function Page({
                   <Title order={2} className="text-2xl font-bold">
                     Top Cast
                   </Title>
-                  <ViewMoreButton href={`movies/${id}/cast-and-crew`}>
+                  <ViewMoreButton href={`/movies/${id}/cast-and-crew`}>
                     All cast & crew
                   </ViewMoreButton>
                 </Group>
                 <PersonCarousel data={credits.cast.slice(0, 10)} />
-                <ViewMoreButton href={`movies/${id}/cast-and-crew`} small>
+                <ViewMoreButton href={`/movies/${id}/cast-and-crew`} small>
                   All cast & crew
                 </ViewMoreButton>
               </Stack>

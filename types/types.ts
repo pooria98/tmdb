@@ -240,6 +240,7 @@ export interface Credit {
   release_date?: string; // For movies
   first_air_date?: string; // For TV shows
   job?: string;
+  department?: string;
   profile_path?: string;
   adult: boolean;
   vote_count: number;
