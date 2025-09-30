@@ -1,3 +1,5 @@
+import { TMDB_BASE_URL, TMDB_OPTIONS } from "./constants";
+
 // FAVORITES
 export const getFavoriteStatus = async (
   userId: string,
@@ -15,8 +17,6 @@ export const getFavoriteStatus = async (
 };
 
 // TMDB
-
-import { TMDB_BASE_URL, TMDB_OPTIONS } from "./constants";
 
 async function fetchFromTMDB(endpoint: string) {
   const res = await fetch(`${TMDB_BASE_URL}${endpoint}`, TMDB_OPTIONS);

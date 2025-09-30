@@ -144,6 +144,10 @@ export default async function Page({
                         userId={session?.user?.id}
                         mediaId={id}
                         type="movie"
+                        title={movie.title}
+                        overview={movie.overview}
+                        posterUrl={movie.poster_path ?? ""}
+                        releaseDate={movie.release_date}
                       />
                     )}
                   </Stack>

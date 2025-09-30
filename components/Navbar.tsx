@@ -16,9 +16,8 @@ import BurgerButton from "./BurgerButton";
 import navlinks from "@/lib/navlinks";
 import { usePathname } from "next/navigation";
 import {
-  IconBell,
+  IconHeart,
   IconLogout,
-  IconMessageCircle,
   IconSearch,
   IconSettings,
   IconUser,
@@ -96,18 +95,24 @@ const Navbar = () => {
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item leftSection={<IconUser size={16} />}>
-                    <Link href="/profile">View profile</Link>
-                  </Menu.Item>
-                  <Menu.Item leftSection={<IconMessageCircle size={16} />}>
-                    Messages
-                  </Menu.Item>
-                  <Menu.Item leftSection={<IconBell size={16} />}>
-                    Notifications
-                  </Menu.Item>
-                  <Menu.Item leftSection={<IconSettings size={16} />}>
-                    Settings
-                  </Menu.Item>
+                  <Link href="/user/profile">
+                    <Menu.Item leftSection={<IconUser size={16} />}>
+                      View profile
+                    </Menu.Item>
+                  </Link>
+
+                  <Link href="/user/favorites">
+                    <Menu.Item leftSection={<IconHeart size={16} />}>
+                      Favorites
+                    </Menu.Item>
+                  </Link>
+
+                  <Link href="/user/settings">
+                    <Menu.Item leftSection={<IconSettings size={16} />}>
+                      Settings
+                    </Menu.Item>
+                  </Link>
+
                   <Menu.Item
                     disabled={loading}
                     color="red"

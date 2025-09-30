@@ -12,24 +12,50 @@ import {
 import { Container, Group, Stack, Title } from "@mantine/core";
 
 const HomePage = async () => {
+  async function safe<T>(promise: Promise<T>, fallback: T): Promise<T> {
+    try {
+      return await promise;
+    } catch (err) {
+      console.error("Fetch error:", err);
+      return fallback;
+    }
+  }
+
   const [
     trendingMovies,
     trendingSeries,
     trendingPeople,
     topRatedMovies,
-    TopRatedSeries,
+    topRatedSeries,
   ] = await Promise.all([
-    getTrendingMovies(),
-    getTrendingSeries(),
-    getTrendingPeople(),
-    getTopRatedMovies(),
-    getTopRatedSeries(),
+    safe(getTrendingMovies(), null),
+    safe(getTrendingSeries(), null),
+    safe(getTrendingPeople(), null),
+    safe(getTopRatedMovies(), null),
+    safe(getTopRatedSeries(), null),
   ]);
+
+  const hasError =
+    !trendingMovies ||
+    !trendingSeries ||
+    !trendingPeople ||
+    !topRatedMovies ||
+    !topRatedSeries;
+
+  if (hasError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <p className="text-red-500 text-lg font-semibold">
+          ⚠️ Some content failed to load.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
       {/* HERO */}
-      <Hero data1={topRatedMovies.results} data2={TopRatedSeries.results} />
+      <Hero data1={topRatedMovies.results} data2={topRatedSeries.results} />
 
       <Container size="xl" p="sm">
         {/* TRENDING MOVIES */}
@@ -95,7 +121,7 @@ const HomePage = async () => {
               view more
             </ViewMoreButton>
           </Group>
-          <MovieCarousel data={TopRatedSeries.results} />
+          <MovieCarousel data={topRatedSeries.results} />
           <ViewMoreButton
             href="/series?sort_by=vote_average.desc&min_votes=1500"
             small

@@ -11,13 +11,34 @@ interface Props {
   userId: string;
   mediaId: string;
   type: "movie" | "series";
+  title: string;
+  posterUrl: string;
+  overview: string;
+  releaseDate: string;
 }
 
-const FavoriteButton = ({ initialValue, userId, mediaId, type }: Props) => {
+const FavoriteButton = ({
+  initialValue,
+  userId,
+  mediaId,
+  type,
+  title,
+  posterUrl,
+  overview,
+  releaseDate,
+}: Props) => {
   const [faved, setFaved] = useState(initialValue);
   const handleFavorite = async () => {
     try {
-      const res = await axios.post("/api/favorites", { userId, mediaId, type });
+      const res = await axios.post("/api/favorites", {
+        userId,
+        mediaId,
+        type,
+        title,
+        posterUrl,
+        overview,
+        releaseDate,
+      });
       const data = res.data;
       setFaved(data.favorite);
     } catch (error) {

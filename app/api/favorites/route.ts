@@ -42,16 +42,19 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const { userId, mediaId, type } = await req.json();
+  const { userId, mediaId, type, title, posterUrl, overview, releaseDate } =
+    await req.json();
 
-  if (!userId) {
-    return new Response("Missing userId", { status: 400 });
-  }
-  if (!mediaId) {
-    return new Response("Missing mediaId", { status: 400 });
-  }
-  if (!type) {
-    return new Response("Missing media type", { status: 400 });
+  if (
+    !userId ||
+    !mediaId ||
+    !type ||
+    !title ||
+    !posterUrl ||
+    !overview ||
+    !releaseDate
+  ) {
+    return new Response("Missing info", { status: 400 });
   }
 
   if (type !== "movie" && type !== "series") {
@@ -61,6 +64,25 @@ export async function POST(req: Request) {
   }
 
   try {
+    await prisma.media.upsert({
+      create: {
+        id: mediaId,
+        type: type,
+        title: title,
+        overview: overview,
+        posterUrl: posterUrl,
+        releaseDate: releaseDate,
+      },
+      update: {
+        title: title,
+        overview: overview,
+        posterUrl: posterUrl,
+        releaseDate: releaseDate,
+      },
+      where: {
+        id_type: { id: mediaId, type: type },
+      },
+    });
     const favorite = await prisma.favorite.findFirst({
       where: {
         userId: userId,

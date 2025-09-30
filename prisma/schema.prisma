@@ -69,12 +69,28 @@ model Verification {
     @@map("verification")
 }
 
+model Media {
+    id          String     @id // TMDB id (string because TV + movie ids can overlap)
+    type        MediaType
+    title       String
+    posterUrl   String?
+    overview    String?
+    releaseDate String?
+    updatedAt   DateTime   @updatedAt
+    favorites   Favorite[]
+
+    @@unique([id, type])
+}
+
 model Favorite {
     id      Int       @id @default(autoincrement())
     userId  String
     mediaId String
     type    MediaType
     user    User      @relation(fields: [userId], references: [id])
+    media   Media     @relation(fields: [mediaId, type], references: [id, type])
+
+    @@unique([mediaId, type, userId]) // prevent duplicates
 }
 
 enum MediaType {
