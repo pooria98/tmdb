@@ -52,18 +52,18 @@ const FullCastCrew = async ({ params, type }: Props) => {
 
   return (
     <Container size="xl" p="sm">
-      <Group justify="space-between">
+      <Group justify="space-between" gap={0}>
         <Link
           href={`/${type === "movies" ? "movies" : "series"}/${id}`}
           className="hover:underline hover:text-primary"
         >
-          <Group gap="xs" py="lg">
+          <Group gap="xs" py="md">
             <IconArrowLeft size={20} />
             <Text>Back to movie details page</Text>
           </Group>
         </Link>
 
-        <Title order={2} py="lg">
+        <Title order={2} py="md">
           Cast and Crew
         </Title>
       </Group>

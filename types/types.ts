@@ -280,3 +280,26 @@ export interface TmdbSearchResult {
   vote_average: number;
   vote_count: number;
 }
+
+export interface TmdbSeasonInfo {
+  name?: string;
+  overview?: string;
+  id?: number;
+  poster_path?: string;
+  season_number?: number;
+  vote_average?: number;
+  episodes?: {
+    air_date?: string;
+    episode_number?: number;
+    id?: number;
+    name?: string;
+    overview?: string;
+    production_code?: string;
+    runtime?: number;
+    season_number?: number;
+    show_id?: number;
+    still_path?: string;
+    vote_average?: number;
+    vote_count?: number;
+  }[];
+}

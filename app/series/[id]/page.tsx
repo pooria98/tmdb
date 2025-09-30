@@ -35,6 +35,7 @@ import PersonCarousel from "@/components/PersonCarousel";
 import MovieCarousel from "@/components/MovieCarousel";
 import dayjs from "dayjs";
 import CompaniesCard from "@/components/CompaniesCard";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -280,43 +281,47 @@ export default async function Page({
                 </Title>
                 <div className="flex flex-wrap gap-4">
                   {series.seasons.map((season) => (
-                    <Card
+                    <Link
                       key={season.id}
-                      shadow="sm"
-                      radius="md"
-                      padding={0}
-                      withBorder
-                      className="w-full xs:w-50"
+                      href={`/series/${id}/season/${season.season_number}`}
                     >
-                      <CardSection>
-                        {season.poster_path ? (
-                          <Image
-                            src={`${TMDB_IMG_URL}/w342${season.poster_path}`}
-                            alt={season.name}
-                            width={342}
-                            height={513}
-                            className="block w-full h-auto"
-                          />
-                        ) : (
-                          <Image
-                            src={noPreview}
-                            alt={season.name}
-                            width={342}
-                            height={513}
-                            className="block w-full h-auto"
-                          />
-                        )}
-                      </CardSection>
-                      <Stack className="p-2 gap-1">
-                        <Text fw={700}>{season.name}</Text>
-                        <Text fw={700} c="var(--color-primary)">
-                          {dayjs(season.air_date).year() || "N/A"}
-                        </Text>
-                        {season.episode_count > 0 && (
-                          <Text>{season.episode_count} episodes</Text>
-                        )}
-                      </Stack>
-                    </Card>
+                      <Card
+                        shadow="sm"
+                        radius="md"
+                        padding={0}
+                        withBorder
+                        className="w-full xs:w-50"
+                      >
+                        <CardSection>
+                          {season.poster_path ? (
+                            <Image
+                              src={`${TMDB_IMG_URL}/w342${season.poster_path}`}
+                              alt={season.name}
+                              width={342}
+                              height={513}
+                              className="block w-full h-auto"
+                            />
+                          ) : (
+                            <Image
+                              src={noPreview}
+                              alt={season.name}
+                              width={342}
+                              height={513}
+                              className="block w-full h-auto"
+                            />
+                          )}
+                        </CardSection>
+                        <Stack className="p-2 gap-1">
+                          <Text fw={700}>{season.name}</Text>
+                          <Text fw={700} c="var(--color-primary)">
+                            {dayjs(season.air_date).year() || "N/A"}
+                          </Text>
+                          {season.episode_count > 0 && (
+                            <Text>{season.episode_count} episodes</Text>
+                          )}
+                        </Stack>
+                      </Card>
+                    </Link>
                   ))}
                 </div>
               </section>

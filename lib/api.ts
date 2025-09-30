@@ -152,6 +152,14 @@ export async function getSeriesRecommendations(id: string) {
   return fetchFromTMDB(`/tv/${id}/recommendations`);
 }
 
+export async function getSeriesSeason(
+  series_id: string,
+  season_number: string
+) {
+  return fetchFromTMDB(`/tv/${series_id}/season/${season_number}
+`);
+}
+
 // CELEBRITIES
 
 export async function getTrendingPeople() {
