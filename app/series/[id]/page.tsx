@@ -22,6 +22,7 @@ import type {
   TmdbSeries,
 } from "@/types/types";
 import {
+  getFavoriteStatus,
   getLanguages,
   getSeriesCredits,
   getSeriesDetails,
@@ -36,18 +37,29 @@ import MovieCarousel from "@/components/MovieCarousel";
 import dayjs from "dayjs";
 import CompaniesCard from "@/components/CompaniesCard";
 import Link from "next/link";
+import FavoriteButton from "@/components/FavoriteButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await auth.api.getSession({
+    headers: await headers(), // you need to pass the headers object.
+  });
+
   const { id } = await params;
   const series: TmdbSeries = await getSeriesDetails(id);
   const externalIds: ExternalIds = await getSeriesExternalIDs(id);
   const credits: CombinedCredits = await getSeriesCredits(id);
   const recommendations: Movies = await getSeriesRecommendations(id);
   const languages: Language[] = await getLanguages();
+  let favoriteStatus = false;
+  if (session) {
+    favoriteStatus = await getFavoriteStatus(session.user.id, id, "series");
+  }
 
   return (
     <>
@@ -137,6 +149,15 @@ export default async function Page({
                         </Badge>
                       ))}
                     </Group>
+
+                    {session && (
+                      <FavoriteButton
+                        initialValue={favoriteStatus}
+                        userId={session?.user?.id}
+                        mediaId={id}
+                        type="series"
+                      />
+                    )}
                   </Stack>
                 </div>
               </Stack>

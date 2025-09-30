@@ -1,3 +1,21 @@
+// FAVORITES
+export const getFavoriteStatus = async (
+  userId: string,
+  mediaId: string,
+  type: "movie" | "series"
+) => {
+  const res = await fetch(
+    `http://localhost:3000/api/favorites?userId=${userId}&mediaId=${mediaId}&type=${type}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch favorite status");
+  }
+  const data: { favorite: boolean } = await res.json();
+  return data.favorite;
+};
+
+// TMDB
+
 import { TMDB_BASE_URL, TMDB_OPTIONS } from "./constants";
 
 async function fetchFromTMDB(endpoint: string) {

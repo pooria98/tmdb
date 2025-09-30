@@ -1,19 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "public"."Post" DROP CONSTRAINT "Post_authorId_fkey";
-
--- DropTable
-DROP TABLE "public"."Post";
-
--- DropTable
-DROP TABLE "public"."User";
-
 -- CreateTable
 CREATE TABLE "public"."user" (
     "id" TEXT NOT NULL,
@@ -72,6 +56,15 @@ CREATE TABLE "public"."verification" (
     CONSTRAINT "verification_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "public"."Favorite" (
+    "id" SERIAL NOT NULL,
+    "userId" TEXT NOT NULL,
+    "mediaId" INTEGER NOT NULL,
+
+    CONSTRAINT "Favorite_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "public"."user"("email");
 
@@ -83,3 +76,6 @@ ALTER TABLE "public"."session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "public"."account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Favorite" ADD CONSTRAINT "Favorite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

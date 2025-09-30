@@ -19,6 +19,7 @@ import type {
   TmdbMovie,
 } from "@/types/types";
 import {
+  getFavoriteStatus,
   getLanguages,
   getMovieCredits,
   getMovieDetails,
@@ -32,18 +33,29 @@ import PersonCarousel from "@/components/PersonCarousel";
 import ViewMoreButton from "@/components/ViewMoreButton";
 import MovieCarousel from "@/components/MovieCarousel";
 import CompaniesCard from "@/components/CompaniesCard";
+import FavoriteButton from "@/components/FavoriteButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await auth.api.getSession({
+    headers: await headers(), // you need to pass the headers object.
+  });
+
   const { id } = await params;
   const movie: TmdbMovie = await getMovieDetails(id);
   const externalIds: ExternalIds = await getMovieExternalIDs(id);
   const credits: CombinedCredits = await getMovieCredits(id);
   const recommendations: Movies = await getMovieRecommendations(id);
   const languages: Language[] = await getLanguages();
+  let favoriteStatus = false;
+  if (session) {
+    favoriteStatus = await getFavoriteStatus(session.user.id, id, "movie");
+  }
 
   return (
     <>
@@ -125,6 +137,15 @@ export default async function Page({
                         </Badge>
                       ))}
                     </Group>
+
+                    {session && (
+                      <FavoriteButton
+                        initialValue={favoriteStatus}
+                        userId={session?.user?.id}
+                        mediaId={id}
+                        type="movie"
+                      />
+                    )}
                   </Stack>
                 </div>
               </Stack>
