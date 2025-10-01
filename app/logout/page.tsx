@@ -3,14 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import useLogout from "@/lib/useLogout";
 import { Button } from "@mantine/core";
-import { Metadata } from "next";
 import React from "react";
-
-export const metadata: Metadata = {
-  title: "TMDB | Logout",
-  description:
-    "Login to your account to access your favorite movies and TV shows.",
-};
 
 const Page = () => {
   const session = authClient.useSession();
