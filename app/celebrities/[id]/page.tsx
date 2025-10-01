@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import MovieCarousel from "@/components/MovieCarousel";
 import { IconCircle } from "@tabler/icons-react";
 import Link from "next/link";
+import Biography from "@/components/Biography";
 
 const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -168,9 +169,7 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <Title order={2} className="text-2xl font-bold mb-2">
               Biography
             </Title>
-            <Text className="leading-relaxed whitespace-pre-wrap">
-              {person.biography || "We don't have a biography for this person."}
-            </Text>
+            <Biography biography={person.biography} />
           </section>
 
           <section className="mb-8">
