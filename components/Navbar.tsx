@@ -64,7 +64,7 @@ const Navbar = () => {
             <BurgerButton />
             <Title c="white" visibleFrom="sm">
               <Link href="/" className="text-white">
-                S-TMDB
+                TMDB
               </Link>
             </Title>
             <Group gap="xs" visibleFrom="sm">

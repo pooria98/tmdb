@@ -131,7 +131,7 @@ const AuthenticationForm = (props: PaperProps) => {
         loaderProps={{ type: "dots" }}
       />
       <Text size="lg" fw={500}>
-        Welcome to S-TMDB, {type} with
+        Welcome to TMDB, {type} with
       </Text>
 
       <Group grow mb="md" mt="md">
