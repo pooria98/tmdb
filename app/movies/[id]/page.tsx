@@ -36,6 +36,7 @@ import CompaniesCard from "@/components/CompaniesCard";
 import FavoriteButton from "@/components/FavoriteButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import MediaImage from "@/components/MediaImage";
 
 export default async function Page({
   params,
@@ -74,23 +75,10 @@ export default async function Page({
             <div className="flex gap-8">
               {/* POSTER (left side) */}
               <div className="w-64 hidden md:block">
-                {movie.poster_path ? (
-                  <Image
-                    src={`${TMDB_IMG_URL}/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    width={500}
-                    height={750}
-                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
-                  />
-                ) : (
-                  <Image
-                    src={noPreview}
-                    alt={movie.title}
-                    width={500}
-                    height={750}
-                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
-                  />
-                )}
+                <MediaImage
+                  profile_path={movie.poster_path}
+                  name={movie.title}
+                />
               </div>
 
               {/* INFO (right side) */}

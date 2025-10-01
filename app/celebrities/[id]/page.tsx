@@ -14,6 +14,7 @@ import MovieCarousel from "@/components/MovieCarousel";
 import { IconCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import Biography from "@/components/Biography";
+import MediaImage from "@/components/MediaImage";
 
 const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -57,23 +58,7 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <main className="flex flex-col sm:flex-row gap-4 md:gap-8 py-4">
         {/* Left Sidebar */}
         <aside className="w-full sm:w-44 md:w-80 flex-shrink-0">
-          {person.profile_path ? (
-            <Image
-              src={`${TMDB_IMG_URL}/original/${person.profile_path}`}
-              width={500}
-              height={750}
-              alt={person.name}
-              className="w-full h-auto block mb-4 rounded-lg"
-            />
-          ) : (
-            <Image
-              src={noPreview}
-              width={500}
-              height={750}
-              alt={person.name}
-              className="w-full h-auto block mb-4 rounded-lg"
-            />
-          )}
+          <MediaImage profile_path={person.profile_path} name={person.name} />
 
           <Group gap="md" className="mb-4">
             <SocialIcon platform="imdb" id={externalIds.imdb_id} />

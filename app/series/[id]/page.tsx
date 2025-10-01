@@ -40,6 +40,7 @@ import Link from "next/link";
 import FavoriteButton from "@/components/FavoriteButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import MediaImage from "@/components/MediaImage";
 
 export default async function Page({
   params,
@@ -78,23 +79,10 @@ export default async function Page({
             <div className="flex gap-8">
               {/* POSTER (left side) */}
               <div className="w-64 hidden md:block">
-                {series.poster_path ? (
-                  <Image
-                    src={`${TMDB_IMG_URL}/w500${series.poster_path}`}
-                    alt={series.name}
-                    width={500}
-                    height={750}
-                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
-                  />
-                ) : (
-                  <Image
-                    src={noPreview}
-                    alt={series.name}
-                    width={500}
-                    height={750}
-                    className="block w-full h-auto rounded-lg shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]"
-                  />
-                )}
+                <MediaImage
+                  profile_path={series.poster_path}
+                  name={series.name}
+                />
               </div>
 
               {/* INFO (right side) */}
