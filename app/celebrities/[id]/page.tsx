@@ -5,6 +5,7 @@ import SocialIcon from "@/components/SocialIcon";
 import { CombinedCredits, TmdbPersonDetails, ExternalIds } from "@/types/types";
 import {
   getCelebritiesDetails,
+  getFavoriteStatus,
   getPersonCombinedCredits,
   getPersonExternalIds,
 } from "@/lib/api";
@@ -16,6 +17,9 @@ import Link from "next/link";
 import Biography from "@/components/Biography";
 import MediaImage from "@/components/MediaImage";
 import { Metadata } from "next";
+import FavoriteButton from "@/components/FavoriteButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function generateMetadata({
   params,
@@ -34,10 +38,17 @@ export async function generateMetadata({
 }
 
 const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(), // you need to pass the headers object.
+  });
   const { id } = await params;
   const person: TmdbPersonDetails = await getCelebritiesDetails(id);
   const credits: CombinedCredits = await getPersonCombinedCredits(id);
   const externalIds: ExternalIds = await getPersonExternalIds(id);
+  let favoriteStatus = false;
+  if (session) {
+    favoriteStatus = await getFavoriteStatus(session.user.id, id, "movie");
+  }
 
   const normalizedCastCredits = credits.cast.map((c) => ({
     ...c,
@@ -156,6 +167,20 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                     {name}
                   </Text>
                 ))}
+              </div>
+            )}
+            {session && (
+              <div>
+                <FavoriteButton
+                  initialValue={favoriteStatus}
+                  userId={session?.user?.id}
+                  mediaId={id}
+                  type="celebrity"
+                  title={person.name}
+                  overview={person.biography}
+                  posterUrl={person.profile_path ?? ""}
+                  releaseDate={""}
+                />
               </div>
             )}
           </div>

@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     return new Response("Missing media type", { status: 400 });
   }
 
-  if (type === "movie" || type === "series") {
+  if (type === "movie" || type === "series" || type === "celebrity") {
     try {
       const favorite = await prisma.favorite.findFirst({
         where: {
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       console.error(error);
     }
   } else {
-    return new Response("type must be 'movie' or 'series' only", {
+    return new Response("type must be 'movie', 'series', or 'celebrity' only", {
       status: 400,
     });
   }
@@ -45,19 +45,11 @@ export async function POST(req: Request) {
   const { userId, mediaId, type, title, posterUrl, overview, releaseDate } =
     await req.json();
 
-  if (
-    !userId ||
-    !mediaId ||
-    !type ||
-    !title ||
-    !posterUrl ||
-    !overview ||
-    !releaseDate
-  ) {
+  if (!userId || !mediaId || !type || !title || !posterUrl || !overview) {
     return new Response("Missing info", { status: 400 });
   }
 
-  if (type !== "movie" && type !== "series") {
+  if (type !== "movie" && type !== "series" && type !== "celebrity") {
     return new Response("invalid media type", {
       status: 400,
     });

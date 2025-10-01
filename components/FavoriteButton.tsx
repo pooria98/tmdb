@@ -10,7 +10,7 @@ interface Props {
   initialValue: boolean;
   userId: string;
   mediaId: string;
-  type: "movie" | "series";
+  type: "movie" | "series" | "celebrity";
   title: string;
   posterUrl: string;
   overview: string;

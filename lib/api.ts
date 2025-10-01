@@ -4,7 +4,7 @@ import { TMDB_BASE_URL, TMDB_OPTIONS } from "./constants";
 export const getFavoriteStatus = async (
   userId: string,
   mediaId: string,
-  type: "movie" | "series"
+  type: "movie" | "series" | "celebrity"
 ) => {
   const res = await fetch(
     `${process.env.BETTER_AUTH_URL}/api/favorites?userId=${userId}&mediaId=${mediaId}&type=${type}`

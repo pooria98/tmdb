@@ -96,4 +96,5 @@ model Favorite {
 enum MediaType {
     movie
     series
+    celebrity
 }
