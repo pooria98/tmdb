@@ -10,6 +10,13 @@ import {
   getTrendingSeries,
 } from "@/lib/api";
 import { Container, Group, Stack, Title } from "@mantine/core";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TMDB | Home",
+  description:
+    "The Movie Database (TMDB) is a popular movie and TV show database. this is a fullstack clone of TMDB made with nextjs and mantine.",
+};
 
 const HomePage = async () => {
   async function safe<T>(promise: Promise<T>, fallback: T): Promise<T> {

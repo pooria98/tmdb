@@ -15,6 +15,23 @@ import { IconCircle } from "@tabler/icons-react";
 import Link from "next/link";
 import Biography from "@/components/Biography";
 import MediaImage from "@/components/MediaImage";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { id } = params;
+  const person = await getCelebritiesDetails(id);
+
+  return {
+    title: person.name,
+    description: person.biography
+      ? person.biography.slice(0, 150) + "..."
+      : `Learn more about ${person.name}`,
+  };
+}
 
 const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

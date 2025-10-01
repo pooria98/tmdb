@@ -1,6 +1,6 @@
-import { getSeriesSeason } from "@/lib/api";
+import { getSeriesDetails, getSeriesSeason } from "@/lib/api";
 import { TMDB_IMG_URL } from "@/lib/constants";
-import { TmdbSeasonInfo } from "@/types/types";
+import { TmdbSeasonInfo, TmdbSeries } from "@/types/types";
 import noPreview from "@/public/no-preview.png";
 import Image from "next/image";
 import {
@@ -13,6 +13,22 @@ import {
 } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string; season: string };
+}): Promise<Metadata> {
+  const { id, season } = await params;
+  const series: TmdbSeries = await getSeriesDetails(id);
+  const seasonInfo: TmdbSeasonInfo = await getSeriesSeason(id, season);
+
+  return {
+    title: series.name + " | Season " + seasonInfo.name,
+    description: `View episodes and season details for ${series.name} - ${seasonInfo.name}`,
+  };
+}
 
 const Page = async ({
   params,

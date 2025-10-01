@@ -37,6 +37,23 @@ import FavoriteButton from "@/components/FavoriteButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import MediaImage from "@/components/MediaImage";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { id } = params;
+  const movie: TmdbMovie = await getMovieDetails(id);
+
+  return {
+    title: movie.title,
+    description: movie.overview
+      ? movie.overview.slice(0, 150) + "..."
+      : `Learn more about ${movie.title}`,
+  };
+}
 
 export default async function Page({
   params,

@@ -10,6 +10,13 @@ import PaginationControls from "@/components/PaginationControls";
 import MediaList from "@/components/MediaList";
 import SortAndFiltersSection from "@/components/SortAndFiltersSection";
 import Search from "@/components/Search";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TMDB | Series",
+  description:
+    "Find your favorite TV series from the biggest movie database in the world.",
+};
 
 const Page = async ({
   searchParams,

@@ -7,6 +7,13 @@ import { Persons } from "@/types/types";
 import { Card, CardSection, Container, SimpleGrid, Title } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TMDB | Celebrities",
+  description:
+    "Find your favorite celebrities based on your favorite movies and TV shows.",
+};
 
 const page = async ({
   searchParams,

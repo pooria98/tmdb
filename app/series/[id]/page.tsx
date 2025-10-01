@@ -41,6 +41,23 @@ import FavoriteButton from "@/components/FavoriteButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import MediaImage from "@/components/MediaImage";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { id } = params;
+  const series: TmdbSeries = await getSeriesDetails(id);
+
+  return {
+    title: series.name,
+    description: series.overview
+      ? series.overview.slice(0, 150) + "..."
+      : `Learn more about ${series.name}`,
+  };
+}
 
 export default async function Page({
   params,
