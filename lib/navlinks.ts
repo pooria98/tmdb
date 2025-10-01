@@ -11,10 +11,10 @@ const navlinks = [
     label: "Celebrities",
     href: "/celebrities",
   },
-  {
-    label: "Users",
-    href: "/users",
-  },
+  // {
+  //   label: "Users",
+  //   href: "/users",
+  // },
 ];
 
 export default navlinks;
