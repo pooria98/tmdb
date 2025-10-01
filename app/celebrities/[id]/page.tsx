@@ -47,7 +47,7 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const externalIds: ExternalIds = await getPersonExternalIds(id);
   let favoriteStatus = false;
   if (session) {
-    favoriteStatus = await getFavoriteStatus(session.user.id, id, "movie");
+    favoriteStatus = await getFavoriteStatus(session.user.id, id, "celebrity");
   }
 
   const normalizedCastCredits = credits.cast.map((c) => ({
