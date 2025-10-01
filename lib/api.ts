@@ -7,7 +7,8 @@ export const getFavoriteStatus = async (
   type: "movie" | "series" | "celebrity"
 ) => {
   const res = await fetch(
-    `${process.env.BETTER_AUTH_URL}/api/favorites?userId=${userId}&mediaId=${mediaId}&type=${type}`
+    `${process.env.BETTER_AUTH_URL}/api/favorites?userId=${userId}&mediaId=${mediaId}&type=${type}`,
+    { cache: "no-store" }
   );
   if (!res.ok) {
     throw new Error("Failed to fetch favorite status");
