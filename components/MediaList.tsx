@@ -25,7 +25,7 @@ const MediaList = ({ items, genres, languages, media_type }: Props) => (
         <Link
           href={`/${media_type}/${item.id}`}
           key={item.id}
-          className="relative flex flex-col md:flex-row shadow-lg bg-gray-200 dark:bg-gray-800 rounded-md overflow-hidden"
+          className="relative flex flex-col md:flex-row shadow-lg bg-gray-200 dark:bg-gray-800 rounded-md overflow-hidden hover:outline outline-primary-filled"
         >
           {/* IMAGE */}
           {item.poster_path ? (
@@ -65,7 +65,7 @@ const MediaList = ({ items, genres, languages, media_type }: Props) => (
             <div className="flex md:flex-col md:items-start md:gap-2 justify-between items-center px-1 md:px-0 text-[var(--mantine-color-dimmed)]">
               <div className="hidden md:flex justify-between items-center gap-2">
                 {item.vote_average > 0 && (
-                  <Badge variant="default" size="lg">
+                  <Badge className="cursor-pointer" variant="default" size="lg">
                     <Group gap="xs">
                       <IconStarFilled
                         size="1rem"

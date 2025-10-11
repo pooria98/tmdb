@@ -21,7 +21,7 @@ const Hero = ({ data1, data2 }: Props) => {
           ta="center"
           className="text-transparent bg-gradient-to-br from-white to-[seagreen] bg-clip-text"
         >
-          SOCIAL TMDB
+          TMDB
         </Title>
         <Text ta="center" size="xl" px="xs">
           Discover millions of movies, series and celebrities. <br /> Find
