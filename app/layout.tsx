@@ -9,6 +9,7 @@ import { Notifications } from "@mantine/notifications";
 import { theme } from "../theme/theme";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+import { ScrollReset } from "@/components/ScrollReset";
 
 export const metadata: Metadata = {
   title: "TMDB",
@@ -33,6 +34,7 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme}>
+          <ScrollReset />
           <Notifications />
           <Navbar />
           <Sidebar />
