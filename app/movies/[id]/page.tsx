@@ -45,7 +45,14 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   const { id } = params;
-  const movie: TmdbMovie = await getMovieDetails(id);
+  let movie: TmdbMovie | null = null;
+  try {
+    movie = await getMovieDetails(id);
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!movie) return { title: "TMDB | Movie not found" };
 
   return {
     title: movie.title,
@@ -65,12 +72,47 @@ export default async function Page({
   });
 
   const { id } = await params;
-  const movie: TmdbMovie = await getMovieDetails(id);
-  const externalIds: ExternalIds = await getMovieExternalIDs(id);
-  const credits: CombinedCredits = await getMovieCredits(id);
-  const recommendations: Movies = await getMovieRecommendations(id);
-  const languages: Language[] = await getLanguages();
+
+  let movie: TmdbMovie | null = null;
+  let externalIds: ExternalIds | null = null;
+  let credits: CombinedCredits | null = null;
+  let recommendations: Movies | null = null;
+  let languages: Language[] | null = null;
   let favoriteStatus = false;
+  let fetchError = false;
+
+  try {
+    movie = await getMovieDetails(id);
+    externalIds = await getMovieExternalIDs(id);
+    credits = await getMovieCredits(id);
+    recommendations = await getMovieRecommendations(id);
+    languages = await getLanguages();
+  } catch (error) {
+    console.log(error);
+    fetchError = true;
+  }
+
+  if (
+    fetchError ||
+    !movie ||
+    !externalIds ||
+    !credits ||
+    !recommendations ||
+    !languages
+  ) {
+    return (
+      <div className="w-full h-full flex flex-col gap-8 justify-center items-center py-16">
+        <Title order={3}>
+          Something went wrong! Failed to fetch movie details
+        </Title>
+        <Text>
+          TMDB API might be down or blocked in your country (try using a VPN)
+        </Text>
+        <Text>Try again later or refresh the page</Text>
+      </div>
+    );
+  }
+
   if (session) {
     favoriteStatus = await getFavoriteStatus(session.user.id, id, "movie");
   }

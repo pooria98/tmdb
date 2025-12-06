@@ -22,9 +22,9 @@ const Page = async () => {
         </Title>
 
         <Image
-          src={noPreview}
-          width={500}
-          height={500}
+          src={session?.user?.image || noPreview}
+          width={1024}
+          height={1024}
           alt="profile picture"
           className="w-64 h-64 aspect-square block mx-auto rounded-full mb-4"
         />

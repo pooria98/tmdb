@@ -27,7 +27,14 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   const { id } = params;
-  const person = await getCelebritiesDetails(id);
+  let person = null;
+  try {
+    person = await getCelebritiesDetails(id);
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!person) return { title: "TMDB | Movie not found" };
 
   return {
     title: person.name,
@@ -41,11 +48,38 @@ const PersonPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const session = await auth.api.getSession({
     headers: await headers(), // you need to pass the headers object.
   });
+
   const { id } = await params;
-  const person: TmdbPersonDetails = await getCelebritiesDetails(id);
-  const credits: CombinedCredits = await getPersonCombinedCredits(id);
-  const externalIds: ExternalIds = await getPersonExternalIds(id);
+
+  let person: TmdbPersonDetails | null = null;
+  let credits: CombinedCredits | null = null;
+  let externalIds: ExternalIds | null = null;
   let favoriteStatus = false;
+  let fetchError = false;
+
+  try {
+    person = await getCelebritiesDetails(id);
+    credits = await getPersonCombinedCredits(id);
+    externalIds = await getPersonExternalIds(id);
+  } catch (error) {
+    console.log(error);
+    fetchError = true;
+  }
+
+  if (fetchError || !person || !externalIds || !credits) {
+    return (
+      <div className="w-full h-full flex flex-col gap-8 justify-center items-center py-16">
+        <Title order={3}>
+          Something went wrong! Failed to fetch celebrity details
+        </Title>
+        <Text>
+          TMDB API might be down or blocked in your country (try using a VPN)
+        </Text>
+        <Text>Try again later or refresh the page</Text>
+      </div>
+    );
+  }
+
   if (session) {
     favoriteStatus = await getFavoriteStatus(session.user.id, id, "celebrity");
   }

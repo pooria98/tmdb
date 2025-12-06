@@ -20,20 +20,15 @@ export const getFavoriteStatus = async (
 // TMDB
 
 async function fetchFromTMDB(endpoint: string) {
-  const res = await fetch(`${TMDB_BASE_URL}${endpoint}`, TMDB_OPTIONS);
-
-  if (!res.ok) {
-    // A more specific error message can be helpful for debugging.
-    const errorBody = await res.text();
-    console.error(
-      `TMDB fetch error: ${res.status} for endpoint: ${endpoint}. Body: ${errorBody}`
-    );
-    throw new Error(`TMDB fetch error: ${res.status}`);
+  try {
+    const res = await fetch(`${TMDB_BASE_URL}${endpoint}`, TMDB_OPTIONS);
+    const text = await res.text();
+    return text ? JSON.parse(text) : {};
+  } catch (error) {
+    const errorBody = error;
+    console.log(`TMDB fetch error: Endpoint: ${endpoint}. Body: ${errorBody}`);
+    return null;
   }
-
-  // Handle cases where the response might be empty
-  const text = await res.text();
-  return text ? JSON.parse(text) : {};
 }
 
 // CONFIG

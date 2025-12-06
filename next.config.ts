@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
   images: {
-    domains: ["image.tmdb.org"],
+    domains: ["image.tmdb.org", "lh3.googleusercontent.com"],
   },
 };
 

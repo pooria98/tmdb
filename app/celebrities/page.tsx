@@ -4,7 +4,14 @@ import Search from "@/components/Search";
 import { getPopularPeople, searchCelebrities } from "@/lib/api";
 import { TMDB_IMG_URL } from "@/lib/constants";
 import { Persons } from "@/types/types";
-import { Card, CardSection, Container, SimpleGrid, Title } from "@mantine/core";
+import {
+  Card,
+  CardSection,
+  Container,
+  SimpleGrid,
+  Title,
+  Text,
+} from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -20,11 +27,33 @@ const page = async ({
 }: {
   searchParams: Promise<{ query?: string; page?: number }>;
 }) => {
+  let celebrities: Persons | null = null;
+  let fetchError = false;
+
   const query = (await searchParams)?.query || "";
   const page = (await searchParams)?.page || 1;
-  const celebrities: Persons = query
-    ? await searchCelebrities(query, page)
-    : await getPopularPeople(page);
+  try {
+    celebrities = query
+      ? await searchCelebrities(query, page)
+      : await getPopularPeople(page);
+  } catch (error) {
+    console.error(error);
+    fetchError = true;
+  }
+
+  if (fetchError || !celebrities) {
+    return (
+      <div className="w-full h-full flex flex-col gap-8 justify-center items-center py-16">
+        <Title order={3}>
+          Something went wrong! Failed to fetch celebrities list.
+        </Title>
+        <Text>
+          TMDB API might be down or blocked in your country (try using a VPN)
+        </Text>
+        <Text>Try again later or refresh the page</Text>
+      </div>
+    );
+  }
 
   return (
     <Container size="xl" p="sm">

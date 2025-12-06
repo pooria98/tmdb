@@ -49,7 +49,14 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   const { id } = params;
-  const series: TmdbSeries = await getSeriesDetails(id);
+  let series: TmdbSeries | null = null;
+  try {
+    series = await getSeriesDetails(id);
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!series) return { title: "TMDB | Series not found" };
 
   return {
     title: series.name,
@@ -69,12 +76,47 @@ export default async function Page({
   });
 
   const { id } = await params;
-  const series: TmdbSeries = await getSeriesDetails(id);
-  const externalIds: ExternalIds = await getSeriesExternalIDs(id);
-  const credits: CombinedCredits = await getSeriesCredits(id);
-  const recommendations: Movies = await getSeriesRecommendations(id);
-  const languages: Language[] = await getLanguages();
+
+  let series: TmdbSeries | null = null;
+  let externalIds: ExternalIds | null = null;
+  let credits: CombinedCredits | null = null;
+  let recommendations: Movies | null = null;
+  let languages: Language[] | null = null;
   let favoriteStatus = false;
+  let fetchError = false;
+
+  try {
+    series = await getSeriesDetails(id);
+    externalIds = await getSeriesExternalIDs(id);
+    credits = await getSeriesCredits(id);
+    recommendations = await getSeriesRecommendations(id);
+    languages = await getLanguages();
+  } catch (error) {
+    console.log(error);
+    fetchError = true;
+  }
+
+  if (
+    fetchError ||
+    !series ||
+    !externalIds ||
+    !credits ||
+    !recommendations ||
+    !languages
+  ) {
+    return (
+      <div className="w-full h-full flex flex-col gap-8 justify-center items-center py-16">
+        <Title order={3}>
+          Something went wrong! Failed to fetch series details
+        </Title>
+        <Text>
+          TMDB API might be down or blocked in your country (try using a VPN)
+        </Text>
+        <Text>Try again later or refresh the page</Text>
+      </div>
+    );
+  }
+
   if (session) {
     favoriteStatus = await getFavoriteStatus(session.user.id, id, "series");
   }

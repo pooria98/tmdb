@@ -5,7 +5,7 @@ import {
   searchSeries,
 } from "@/lib/api";
 import { Genres, Language, Movies } from "@/types/types";
-import { Container, Title } from "@mantine/core";
+import { Container, Title, Text } from "@mantine/core";
 import PaginationControls from "@/components/PaginationControls";
 import MediaList from "@/components/MediaList";
 import SortAndFiltersSection from "@/components/SortAndFiltersSection";
@@ -33,6 +33,11 @@ const Page = async ({
     page?: number;
   }>;
 }) => {
+  let movies: Movies | null = null;
+  let genres: Genres | null = null;
+  let languages: Language[] | null = null;
+  let fetchError = false;
+
   const query = (await searchParams)?.query || "";
   const sort_by = (await searchParams)?.sort_by || "";
   const include_adult = (await searchParams)?.include_adult || false;
@@ -43,20 +48,41 @@ const Page = async ({
   const min_rating = (await searchParams)?.min_rating || 0;
   const min_votes = (await searchParams)?.min_votes || 0;
   const page = (await searchParams)?.page || 1;
-  const movies: Movies = query
-    ? await searchSeries(query, include_adult, first_air_date_year, page)
-    : await getSeries(
-        sort_by,
-        include_adult,
-        first_air_date_year,
-        with_original_language,
-        with_genres,
-        min_rating,
-        min_votes,
-        page
-      );
-  const genres: Genres = await getSeriesGenres();
-  const languages: Language[] = await getLanguages();
+
+  try {
+    movies = query
+      ? await searchSeries(query, include_adult, first_air_date_year, page)
+      : await getSeries(
+          sort_by,
+          include_adult,
+          first_air_date_year,
+          with_original_language,
+          with_genres,
+          min_rating,
+          min_votes,
+          page
+        );
+    genres = await getSeriesGenres();
+    languages = await getLanguages();
+  } catch (error) {
+    console.error(error);
+    fetchError = true;
+  }
+
+  if (fetchError || !movies || !genres || !languages) {
+    return (
+      <div className="w-full h-full flex flex-col gap-8 justify-center items-center py-16">
+        <Title order={3}>
+          Something went wrong! Failed to fetch series list.
+        </Title>
+        <Text>
+          TMDB API might be down or blocked in your country (try using a VPN)
+        </Text>
+        <Text>Try again later or refresh the page</Text>
+      </div>
+    );
+  }
+
   return (
     <Container size="xl" p="sm">
       <Title order={1}>Series</Title>
